@@ -1,0 +1,28 @@
+{
+  "name": "leuchtenstadt",
+  "version": "0.0.1",
+  "type": "module",
+  "private": false,
+  "scripts": {
+    "dev": "devflow dev",
+    "build": "devflow build"
+  },
+  "dependencies": {
+    "@xatom/core": "1.0.12",
+    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@webflow/data-types": "^1.0.2",
+    "@webflow/react": "^1.0.2",
+    "@webflow/webflow-cli": "^1.8.49",
+    "devflow": "github:peakpointch/devflow",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "vite": "^7.2.4"
+  },
+  "license": "MIT"
+}
