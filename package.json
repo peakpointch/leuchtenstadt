@@ -7,9 +7,16 @@
     "dev": "devflow dev",
     "build": "devflow build"
   },
+  "libswitch": {
+    "name": "peakflow",
+    "local": "../../peakflow/",
+    "remote": "github:peakpointch/peakflow#v0.2.0-alpha.1",
+    "tsconfigDev": "tsconfig.dev.json",
+    "tsconfigProd": "tsconfig.prod.json"
+  },
   "dependencies": {
     "@xatom/core": "1.0.12",
-    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.0"
+    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.1"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
@@ -20,6 +27,7 @@
     "@webflow/react": "^1.0.2",
     "@webflow/webflow-cli": "^1.8.49",
     "devflow": "github:peakpointch/devflow",
+    "libswitch": "github:peakpointch/libswitch",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "vite": "^7.2.4"
