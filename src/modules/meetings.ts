@@ -14,6 +14,8 @@ export default async function initMeetings(): Promise<void> {
       light: {
         "cal-brand": "#aa9774",
         "cal-bg-emphasis": "#f8f2eb",
+        "cal-bg-subtle": "#fbf8f5",
+        "cal-bg-muted": "#fbf8f5",
       },
     },
   });
