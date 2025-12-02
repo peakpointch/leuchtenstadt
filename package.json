@@ -10,13 +10,13 @@
   "libswitch": {
     "name": "peakflow",
     "local": "../../peakflow/",
-    "remote": "github:peakpointch/peakflow#v0.2.0-alpha.2",
+    "remote": "github:peakpointch/peakflow#v0.2.0-alpha.3",
     "tsconfigDev": "tsconfig.dev.json",
     "tsconfigProd": "tsconfig.prod.json"
   },
   "dependencies": {
     "@xatom/core": "1.0.12",
-    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.2"
+    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.3"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
