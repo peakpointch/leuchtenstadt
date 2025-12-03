@@ -3,6 +3,7 @@ import {
   CalculationResult,
   LegalForm,
   MwstStatus,
+  PricingPackage,
   UserInput,
 } from "./datatypes";
 import { calculateFullPrice } from "./calculator";
@@ -100,7 +101,7 @@ const SelectInput: React.FC<SelectFieldProps> = ({
 );
 
 interface ResultCardProps {
-  result: CalculationResult;
+  result: Partial<CalculationResult>;
 }
 
 /**
@@ -109,37 +110,53 @@ interface ResultCardProps {
 const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   const { selectedPackage, monthlyPriceCHF, annualPriceCHF } = result;
 
+  // const packageColors = {
+  //   STARTER: "bg-blue-500/10 text-blue-700 ring-blue-500",
+  //   SMART: "bg-blue-500/10 text-blue-700 ring-blue-500",
+  //   COMFORT: "bg-blue-500/10 text-blue-700 ring-blue-500",
+  //   PREMIUM: "bg-brand-500/10 text-brand-700 ring-brand-500",
+  // };
+
   const packageColors = {
-    STARTER: "bg-green-500/10 text-green-700 ring-green-500",
-    SMART: "bg-blue-500/10 text-blue-700 ring-blue-500",
-    COMFORT: "bg-purple-500/10 text-purple-700 ring-purple-500",
-    PREMIUM: "bg-red-500/10 text-red-700 ring-red-500",
+    UNKNOWN: "text-blue-700",
+    STARTER: "text-blue-700",
+    SMART: "text-blue-700",
+    COMFORT: "text-blue-700",
+    PREMIUM: "text-brand-500",
   };
+
+  const isPreview = selectedPackage.name === "UNKNOWN";
 
   const PackageDescription = PACKAGE_COMPONENTS[selectedPackage.name];
 
   return (
     <div className="p-6 bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
-      <div className="flex flex-col items-start">
+      <div className="flex justify-between items-end">
+        <div className="flex flex-col items-start">
+          {/* <span */}
+          {/*   className={`px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full ring-2 ${ */}
+          {/*     packageColors[selectedPackage.name] */}
+          {/*   }`} */}
+          {/* > */}
+          {/*   {selectedPackage.name} */}
+          {/* </span> */}
+          <span className={`mt-2`}>Ihr empfohlenes Paket</span>
+          <h2
+            className={`mt-2 text-3xl ${packageColors[selectedPackage.name]}`}
+          >
+            {isPreview ? "???" : selectedPackage.name}
+          </h2>
+        </div>
         <span
-          className={`px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full ring-2 ${
+          className={`text-3xl font-extrabold ${
             packageColors[selectedPackage.name]
           }`}
         >
-          {selectedPackage.name}
+          {isPreview ? "CHF ???" : formatCHF(monthlyPriceCHF)}
         </span>
-        <h2 className="mt-2 text-2xl text-gray-900">Ihr empfohlenes Paket</h2>
       </div>
 
-      <div className="border-t border-gray-200 pt-6 space-y-4">
-        <div className="flex justify-between items-end">
-          <span className="text-base text-gray-500 font-medium">
-            Monatlicher Preis
-          </span>
-          <span className="text-3xl font-extrabold text-blue-500">
-            {formatCHF(monthlyPriceCHF)}
-          </span>
-        </div>
+      <div className="border-t border-gray-200 space-y-4">
         {/* <div className="flex justify-between items-end"> */}
         {/*   <span className="text-base text-gray-500 font-medium"> */}
         {/*     Jährlicher Preis */}
@@ -256,12 +273,12 @@ export const Calculator = () => {
   );
 
   return (
-    <div className="w-full bg-white overflow-hidden grid md:grid-cols-2">
+    <div className="w-full bg-white grid md:grid-cols-2 gap-10">
       {/* --- Left Column: Input Form --- */}
-      <div className="p-8 sm:p-10 space-y-8">
-        <h1 className="text-4xl font-extrabold text-gray-900">
-          Leistungs- und Preisrechner
-        </h1>
+      <div className="space-y-8" data-italic-style="custom">
+        <h2 className="text-4xl font-extrabold">
+          Berechnen Sie jetzt Ihre <em>Treuhand-Offerte</em>
+        </h2>
         <p className="text-gray-500">
           Passen Sie die Werte an, um Ihr empfohlenes Paket und den monatlichen
           Preis zu sehen.
@@ -311,37 +328,21 @@ export const Calculator = () => {
       </div>
 
       {/* --- Right Column: Results --- */}
-      {result ? (
-        <div
-          className={`p-8 sm:p-10 flex flex-col justify-center transition-all duration-300 ${
-            result.selectedPackage.name === "PREMIUM"
-              ? "bg-brand-600"
-              : "bg-blue-800"
-          }`}
-        >
-          <ResultCard result={result} />
-        </div>
-      ) : (
-        <div
-          className={`p-8 sm:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 bg-blue-500`}
-        >
-          <div className="w-full">
-            <ResultCard
-              result={{
-                selectedPackage: PACKAGE_CONFIG.STARTER,
-                monthlyPriceCHF: 0,
-                annualPriceCHF: 0,
-                annualBookings: 1 * 12,
-                extraBookings: 1,
-                extraEmployees: 1,
-                bookingSurcharge: 1,
-                employeeSurcharge: 1,
-                basePriceComponent: 100,
-              }}
-            />
-          </div>
-        </div>
-      )}
+      <div
+        className={`p-8 sm:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 ${
+          result?.selectedPackage?.name === "PREMIUM"
+            ? "bg-brand-600"
+            : "bg-blue-800"
+        }`}
+      >
+        <ResultCard
+          result={
+            result || {
+              selectedPackage: PACKAGE_CONFIG.UNKNOWN,
+            }
+          }
+        />
+      </div>
     </div>
   );
 };

@@ -12,7 +12,12 @@ export enum LegalForm {
   SOLE_PROPRIETORSHIP = "Einzelfirma",
 }
 
-export type PackageName = "STARTER" | "SMART" | "COMFORT" | "PREMIUM";
+export type PackageName =
+  | "STARTER"
+  | "SMART"
+  | "COMFORT"
+  | "PREMIUM"
+  | "UNKNOWN";
 
 /**
  * Interface representing the user input collected from the form.

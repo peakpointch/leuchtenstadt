@@ -15,6 +15,33 @@ const DescItem: React.FC<DescItemProps> = ({ children }: DescItemProps) => {
   );
 };
 
+export const UnknownDescription: React.FC = () => {
+  return (
+    <ul className="list-none p-0">
+      <DescItem>
+        Finanzbuchhaltung
+        <span className="block text-sm text-gray-500">
+          bis ??? Buchungen/Jahr
+        </span>
+      </DescItem>
+      <DescItem>
+        MWST-Abrechnung
+        <span className="block text-sm text-gray-500">
+          bis ??? Abrechnungen/Jahr
+        </span>
+      </DescItem>
+      <DescItem>Jahresabschluss</DescItem>
+      <DescItem>Steuererklärung</DescItem>
+      <DescItem>
+        Lohnbuchhaltung
+        <span className="block text-sm text-gray-500">
+          für bis zu ??? Mitarbeitende
+        </span>
+      </DescItem>
+    </ul>
+  );
+};
+
 export const StarterDescription: React.FC = () => {
   return (
     <ul className="list-none p-0">
@@ -134,6 +161,7 @@ const PremiumDescription: React.FC = () => {
 };
 
 export const PACKAGE_COMPONENTS: Record<PackageName, React.FC> = {
+  UNKNOWN: UnknownDescription,
   STARTER: StarterDescription,
   SMART: SmartDescription,
   COMFORT: ComfortDescription,

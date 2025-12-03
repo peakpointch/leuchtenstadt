@@ -1,6 +1,14 @@
 import { PackageName, PricingPackage } from "./datatypes";
 
 export const PACKAGE_CONFIG: Record<PackageName, PricingPackage> = {
+  UNKNOWN: {
+    name: "UNKNOWN",
+    basePrice: 0,
+    booksIncludedMonthly: 0,
+    pricePerExtraBook: 0,
+    employeesIncluded: 0,
+    pricePerExtraEmployee: 0,
+  },
   STARTER: {
     name: "STARTER",
     basePrice: 250,
