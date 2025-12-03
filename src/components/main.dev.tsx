@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Badge } from "./badge";
+import { Calculator } from "./calc/index.tsx";
+import "./main.css";
 
 // Import any component inside your repo:
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <div style={{ padding: 40 }}>
       <h1>Components Playground</h1>
-      <Badge text="Hello Motherfuckers" variant="Light"></Badge>
+      <Calculator></Calculator>
     </div>
   );
 }
