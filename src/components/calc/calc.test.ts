@@ -19,7 +19,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 101,
       anzahlMitarbeitende: 1,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     expect(determinePackageHelper(input)).toBe("PREMIUM");
@@ -29,7 +29,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 10,
       anzahlMitarbeitende: 11,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     expect(determinePackageHelper(input)).toBe("PREMIUM");
@@ -41,7 +41,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 80,
       anzahlMitarbeitende: 8,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.GMBH,
     };
     expect(determinePackageHelper(input)).toBe("COMFORT");
@@ -51,7 +51,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 20,
       anzahlMitarbeitende: 7,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.GMBH,
     };
     expect(determinePackageHelper(input)).toBe("COMFORT");
@@ -63,7 +63,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 35,
       anzahlMitarbeitende: 4,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.GMBH,
     };
     expect(determinePackageHelper(input)).toBe("SMART");
@@ -73,7 +73,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 10,
       anzahlMitarbeitende: 4,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.GMBH,
     };
     expect(determinePackageHelper(input)).toBe("SMART");
@@ -106,7 +106,7 @@ describe("Package Determination Logic (determinePackage)", () => {
     const input: UserInput = {
       buchungenProMonat: 20,
       anzahlMitarbeitende: 1,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     expect(determinePackageHelper(input)).toBe("STARTER");
@@ -119,7 +119,7 @@ describe("Price Calculation Logic (calculateFullPrice)", () => {
     const input: UserInput = {
       buchungenProMonat: 20,
       anzahlMitarbeitende: 1,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     const result = calculateFullPrice(input);
@@ -171,7 +171,7 @@ describe("Price Calculation Logic (calculateFullPrice)", () => {
     const input: UserInput = {
       buchungenProMonat: 101,
       anzahlMitarbeitende: 1,
-      mehrwertsteuerStatus: MwstStatus.NONE_OR_BALANCE,
+      mehrwertsteuerStatus: MwstStatus.BALANCE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     const result = calculateFullPrice(input);
