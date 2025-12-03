@@ -11,11 +11,18 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      input: "./index.dev.html", // tell Vite to use this as the entry
+      input: "./index.html", // tell Vite to use this as the entry
     },
   },
   server: {
     port: 3030,
+    hmr: true, // Explicitly enable HMR
+
+    // Core watcher configuration to ensure stability
+    watch: {
+      usePolling: false,
+      ignored: ["**/node_modules/**", "**/.git/**", "**/.cache/**"],
+    },
   },
   resolve: {
     alias: {
@@ -24,4 +31,3 @@ export default defineConfig({
     },
   },
 });
-
