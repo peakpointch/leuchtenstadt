@@ -102,11 +102,22 @@ describe("Package Determination Logic (determinePackage)", () => {
   });
 
   // 4.1 STARTER Tests
-  it("should select STARTER when all criteria are met (<= 300 books, <= 2 employees, MWST is None/Balance)", () => {
+  it("should select STARTER when MWST is BALANCE and <= 300 books and <= 2 employees", () => {
     const input: UserInput = {
       buchungenProMonat: 20,
       anzahlMitarbeitende: 1,
       mehrwertsteuerStatus: MwstStatus.BALANCE,
+      rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
+    };
+    expect(determinePackageHelper(input)).toBe("STARTER");
+  });
+
+  // 4.1 STARTER Tests
+  it("should select STARTER when MWST is NONE and <= 300 books and <= 2 employees", () => {
+    const input: UserInput = {
+      buchungenProMonat: 20,
+      anzahlMitarbeitende: 1,
+      mehrwertsteuerStatus: MwstStatus.NONE,
       rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
     };
     expect(determinePackageHelper(input)).toBe("STARTER");
