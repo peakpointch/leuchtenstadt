@@ -2,7 +2,7 @@ import { CalculationResult } from "./datatypes";
 import { PACKAGE_COMPONENTS } from "./packages";
 
 // Helper function to format currency
-const formatCHF = (amount: number) => {
+export const formatCHF = (amount: number) => {
   return new Intl.NumberFormat("de-CH", {
     style: "currency",
     currency: "CHF",

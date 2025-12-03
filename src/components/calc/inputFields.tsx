@@ -1,31 +1,40 @@
 export interface InputFieldProps {
-  label: string;
-  value: number;
+  label?: string;
+  type?: "text" | "number" | "email" | "phone";
+  value?: number;
   unit?: string;
-  onChange: (value: number) => void;
-  min: number;
+  onChange?: (value: number) => void;
+  min?: number;
+  max?: number;
   placeholder?: string;
-  isInvalid: boolean;
+  isInvalid?: boolean;
 }
 
 /**
  * Component for number inputs (Buchungen and Mitarbeiter).
  */
-export const NumberInput: React.FC<InputFieldProps> = ({
+export const Input: React.FC<InputFieldProps> = ({
+  type,
   label,
   value,
   unit,
   onChange,
   min,
+  max,
   placeholder,
   isInvalid,
 }) => (
   <div className="flex flex-col space-y-2">
-    <label className=" font-medium text-gray-700">{label}</label>
+    {label ? (
+      <label className=" font-medium text-gray-700">{label}</label>
+    ) : (
+      <></>
+    )}
     <div className="relative flex items-center">
       <input
-        type="number"
+        type={type || "text"}
         min={min}
+        max={max}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(parseInt(e.target.value) || min)}
