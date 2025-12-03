@@ -15,7 +15,7 @@ const DescItem: React.FC<DescItemProps> = ({ children }: DescItemProps) => {
   );
 };
 
-const StarterDescription: React.FC = () => {
+export const StarterDescription: React.FC = () => {
   return (
     <ul className="list-none p-0">
       <DescItem>
@@ -42,9 +42,100 @@ const StarterDescription: React.FC = () => {
   );
 };
 
+export const SmartDescription: React.FC = () => {
+  return (
+    <ul className="list-none p-0">
+      <DescItem>
+        Finanzbuchhaltung
+        <span className="block text-sm text-gray-500">
+          bis 600 Buchungen/Jahr
+        </span>
+      </DescItem>
+      <DescItem>
+        MWST-Abrechnung
+        <span className="block text-sm text-gray-500">quartalsweise</span>
+      </DescItem>
+      <DescItem>Jahresabschluss</DescItem>
+      <DescItem>Steuererklärung</DescItem>
+      <DescItem>
+        Lohnbuchhaltung
+        <span className="block text-sm text-gray-500">
+          für bis zu 6 Mitarbeitende
+        </span>
+      </DescItem>
+      <DescItem>E-Mail-Support</DescItem>
+      <DescItem>Einfache Rückfragen</DescItem>
+    </ul>
+  );
+};
+
+export const ComfortDescription: React.FC = () => {
+  return (
+    <ul className="list-none p-0">
+      <DescItem>
+        Finanzbuchhaltung
+        <span className="block text-sm text-gray-500">
+          bis 600 Buchungen/Jahr
+        </span>
+      </DescItem>
+      <DescItem>
+        MWST-Abrechnung
+        <span className="block text-sm text-gray-500">quartalsweise</span>
+      </DescItem>
+      <DescItem>Jahresabschluss</DescItem>
+      <DescItem>Steuererklärung</DescItem>
+      <DescItem>
+        Lohnbuchhaltung
+        <span className="block text-sm text-gray-500">
+          für bis zu 10 Mitarbeitende
+        </span>
+      </DescItem>
+      <DescItem>E-Mail-Support</DescItem>
+      <DescItem>Einfache Rückfragen</DescItem>
+      <DescItem>Digitale Belegverarbeitung</DescItem>
+      <DescItem>
+        Digitale Belegverarbeitung
+        <span className="block text-sm text-gray-500">
+          2 Std. / Monat inkl.
+        </span>
+      </DescItem>
+    </ul>
+  );
+};
+
+const PremiumDescription: React.FC = () => {
+  return (
+    <ul className="list-none p-0">
+      <DescItem>
+        Finanzbuchhaltung
+        <span className="block text-sm text-gray-500">unlimitiert</span>
+      </DescItem>
+      <DescItem>
+        MWST-Abrechnung
+        <span className="block text-sm text-gray-500">quartalsweise</span>
+      </DescItem>
+      <DescItem>Jahresabschluss</DescItem>
+      <DescItem>Steuererklärung</DescItem>
+      <DescItem>
+        Lohnbuchhaltung
+        <span className="block text-sm text-gray-500">ab 10 Mitarbeitende</span>
+      </DescItem>
+      <DescItem>E-Mail-Support</DescItem>
+      <DescItem>Einfache Rückfragen</DescItem>
+      <DescItem>Digitale Belegverarbeitung</DescItem>
+      <DescItem>
+        Digitale Belegverarbeitung
+        <span className="block text-sm text-gray-500">
+          4 Std. / Monat inkl.
+        </span>
+      </DescItem>
+    </ul>
+  );
+};
+
 export const PACKAGE_COMPONENTS: Record<PackageName, React.FC> = {
   STARTER: StarterDescription,
-  SMART: StarterDescription,
-  COMFORT: StarterDescription,
-  PREMIUM: StarterDescription,
+  SMART: SmartDescription,
+  COMFORT: ComfortDescription,
+  PREMIUM: PremiumDescription,
 };
