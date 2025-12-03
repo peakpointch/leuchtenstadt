@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@xatom/core": "1.0.12",
+    "lucide-react": "^0.555.0",
     "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.3"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@ import {
   UserInput,
 } from "./datatypes";
 import { calculateFullPrice } from "./calculator";
+import { PACKAGE_COMPONENTS } from "./packages";
 
 export interface CalcProps {}
 
@@ -24,9 +25,10 @@ const formatCHF = (amount: number) => {
 interface InputFieldProps {
   label: string;
   value: number;
-  unit: string;
+  unit?: string;
   onChange: (value: number) => void;
   min: number;
+  placeholder?: string;
 }
 
 /**
@@ -38,18 +40,20 @@ const NumberInput: React.FC<InputFieldProps> = ({
   unit,
   onChange,
   min,
+  placeholder,
 }) => (
   <div className="flex flex-col space-y-2">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
+    <label className=" font-medium text-gray-700">{label}</label>
     <div className="relative flex items-center">
       <input
         type="number"
         min={min}
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(parseInt(e.target.value) || min)}
-        className="w-full p-3 pr-16 border border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150"
+        className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150"
       />
-      <span className="absolute right-0 top-0 bottom-0 flex items-center pr-3 text-gray-500 text-sm">
+      <span className="absolute pr-9 right-0 top-0 bottom-0 flex items-center text-gray-500 text-sm select-none pointer-events-none">
         {unit}
       </span>
     </div>
@@ -111,13 +115,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
     PREMIUM: "bg-red-500/10 text-red-700 ring-red-500",
   };
 
-  const packageDescription = {
-    STARTER: "Basis-Paket für kleine Unternehmen und einfache MWST-Fälle.",
-    SMART: "Ideal für wachsende Firmen oder komplexe MWST-Anforderungen.",
-    COMFORT:
-      "Umfangreiches Paket für mittelgrosse Unternehmen mit mehr Buchungen und Mitarbeitenden.",
-    PREMIUM: "Top-Paket für grosse Unternehmen mit hohen Volumina.",
-  };
+  const PackageDescription = PACKAGE_COMPONENTS[selectedPackage.name];
 
   return (
     <div className="p-6 bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
@@ -129,12 +127,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
         >
           {selectedPackage.name}
         </span>
-        <h2 className="mt-2 text-2xl font-extrabold text-gray-900">
-          Ihr empfohlenes Paket
-        </h2>
-        <p className="text-gray-500 text-sm mt-1">
-          {packageDescription[selectedPackage.name]}
-        </p>
+        <h2 className="mt-2 text-2xl text-gray-900">Ihr empfohlenes Paket</h2>
       </div>
 
       <div className="border-t border-gray-200 pt-6 space-y-4">
@@ -142,19 +135,21 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
           <span className="text-base text-gray-500 font-medium">
             Monatlicher Preis
           </span>
-          <span className="text-3xl font-extrabold text-indigo-600">
+          <span className="text-3xl font-extrabold text-blue-500">
             {formatCHF(monthlyPriceCHF)}
           </span>
         </div>
-        <div className="flex justify-between items-end">
-          <span className="text-base text-gray-500 font-medium">
-            Jährlicher Preis
-          </span>
-          <span className="text-xl font-bold text-gray-800">
-            {formatCHF(annualPriceCHF)}
-          </span>
-        </div>
+        {/* <div className="flex justify-between items-end"> */}
+        {/*   <span className="text-base text-gray-500 font-medium"> */}
+        {/*     Jährlicher Preis */}
+        {/*   </span> */}
+        {/*   <span className="text-xl font-bold text-gray-800"> */}
+        {/*     {formatCHF(annualPriceCHF)} */}
+        {/*   </span> */}
+        {/* </div> */}
       </div>
+
+      <PackageDescription />
 
       {/* <PriceBreakdown result={result} /> */}
     </div>
@@ -209,8 +204,8 @@ const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
 
 // Default state matching the minimal requirements for calculation
 const initialUserInput: UserInput = {
-  buchungenProMonat: 20, // Example: 20/month * 12 = 240/year (STARTER range)
-  anzahlMitarbeitende: 1, // Example: 1 (STARTER range)
+  buchungenProMonat: null, // Example: 20/month * 12 = 240/year (STARTER range)
+  anzahlMitarbeitende: null, // Example: 1 (STARTER range)
   mehrwertsteuerStatus: MwstStatus.BALANCE,
   rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
 };
@@ -260,69 +255,67 @@ export const Calculator = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-8 font-sans">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
-        {/* --- Left Column: Input Form --- */}
-        <div className="p-8 sm:p-10 space-y-8">
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Leistungs- und Preisrechner
-          </h1>
-          <p className="text-gray-500">
-            Passen Sie die Werte an, um Ihr empfohlenes Paket und den
-            monatlichen Preis zu sehen.
-          </p>
+    <div className="w-full bg-white overflow-hidden grid md:grid-cols-2">
+      {/* --- Left Column: Input Form --- */}
+      <div className="p-8 sm:p-10 space-y-8">
+        <h1 className="text-4xl font-extrabold text-gray-900">
+          Leistungs- und Preisrechner
+        </h1>
+        <p className="text-gray-500">
+          Passen Sie die Werte an, um Ihr empfohlenes Paket und den monatlichen
+          Preis zu sehen.
+        </p>
 
-          <div className="space-y-6">
-            <NumberInput
-              label="Monatliche Buchungen (Zahlungsein- und -ausgänge)"
-              value={input.buchungenProMonat}
-              unit="Buchungen/Monat"
-              onChange={(val) => handleInputChange("buchungenProMonat", val)}
-              min={0}
-            />
+        <div className="space-y-6">
+          <NumberInput
+            label="Wie viele Buchungen pro Monat haben Sie?"
+            placeholder="Zahl eingeben"
+            value={input.buchungenProMonat}
+            onChange={(val) => handleInputChange("buchungenProMonat", val)}
+            min={0}
+          />
 
-            <NumberInput
-              label="Anzahl Mitarbeitende (mit Lohn)"
-              value={input.anzahlMitarbeitende}
-              unit="Personen"
-              onChange={(val) => handleInputChange("anzahlMitarbeitende", val)}
-              min={0}
-            />
+          <NumberInput
+            label="Wie viele Personen erhalten einen Lohn?"
+            placeholder="Zahl eingeben"
+            value={input.anzahlMitarbeitende}
+            onChange={(val) => handleInputChange("anzahlMitarbeitende", val)}
+            min={0}
+          />
 
-            <SelectInput
-              label="Mehrwertsteuer Status"
-              value={input.mehrwertsteuerStatus}
-              options={mwstOptions}
-              onChange={(val) =>
-                handleInputChange("mehrwertsteuerStatus", val as MwstStatus)
-              }
-            />
+          <SelectInput
+            label="Sind Sie für die Mehrwertsteuer angemeldet?"
+            value={input.mehrwertsteuerStatus}
+            options={mwstOptions}
+            onChange={(val) =>
+              handleInputChange("mehrwertsteuerStatus", val as MwstStatus)
+            }
+          />
 
-            <SelectInput
-              label="Rechtsform"
-              value={input.rechtsform}
-              options={legalFormOptions}
-              onChange={(val) =>
-                handleInputChange("rechtsform", val as LegalForm)
-              }
-            />
-          </div>
+          <SelectInput
+            label="Welche Rechtsform hat Ihr Unternehmen?"
+            value={input.rechtsform}
+            options={legalFormOptions}
+            onChange={(val) =>
+              handleInputChange("rechtsform", val as LegalForm)
+            }
+          />
         </div>
+      </div>
 
-        {/* --- Right Column: Results --- */}
-        <div
-          className={`p-8 sm:p-10 flex flex-col justify-center transition-all duration-300 ${
-            result.selectedPackage.name === "STARTER"
-              ? "bg-green-50"
-              : result.selectedPackage.name === "SMART"
-              ? "bg-blue-50"
-              : result.selectedPackage.name === "COMFORT"
-              ? "bg-purple-50"
-              : "bg-red-50"
-          }`}
-        >
-          <ResultCard result={result} />
-        </div>
+      {/* --- Right Column: Results --- */}
+      <div
+        className={`p-8 sm:p-10 flex flex-col justify-center transition-all duration-300 ${
+          result.selectedPackage.name === "STARTER"
+            ? "bg-green-50"
+            : result.selectedPackage.name === "SMART"
+            ? "bg-blue-50"
+            : result.selectedPackage.name === "COMFORT"
+            ? "bg-purple-50"
+            : "bg-red-50"
+        }`}
+      >
+        <ResultCard result={result} />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 @tailwind utilities;
 
@@ -6,6 +6,29 @@
   --font-display: "Kaisei Decol", serif;
   --default-font-family: "Montserrat", sans-serif;
   --font-sans: "Montserrat";
+
+  --color-light-100: white;
+  --color-light-200: #ebebeb;
+  --color-dark-800: #2f2b2d;
+  --color-dark-900: #1f1d1e;
+  --color-brand-100: #fbf8f5;
+  --color-brand-200: #f8f2eb;
+  --color-brand-300: color-mix(in srgb, var(--color-brand-500), white 40%);
+  --color-brand-400: color-mix(in srgb, var(--color-brand-500), white 20%);
+  --color-brand-500: #aa9774;
+  --color-brand-600: color-mix(in srgb, var(--color-brand-500), black 20%);
+  --color-brand-700: color-mix(in srgb, var(--color-brand-500), black 40%);
+  --color-brand-900: color-mix(in srgb, var(--color-brand-500), black 80%);
+  --color-brand-800: color-mix(in srgb, var(--color-brand-500), black 60%);
+  --color-blue-100: color-mix(in srgb, var(--color-blue-500), white 80%);
+  --color-blue-200: color-mix(in srgb, var(--color-blue-500), white 60%);
+  --color-blue-300: color-mix(in srgb, var(--color-blue-500), white 40%);
+  --color-blue-400: color-mix(in srgb, var(--color-blue-500), white 20%);
+  --color-blue-500: #0d509f;
+  --color-blue-600: color-mix(in srgb, var(--color-blue-500), black 20%);
+  --color-blue-700: color-mix(in srgb, var(--color-blue-500), black 40%);
+  --color-blue-800: color-mix(in srgb, var(--color-blue-500), black 60%);
+  --color-blue-900: color-mix(in srgb, var(--color-blue-500), black 80%);
 }
 
 h1,
