@@ -7,6 +7,7 @@ import {
 } from "./datatypes";
 import { calculateFullPrice } from "./calculator";
 import { PACKAGE_COMPONENTS } from "./packages";
+import { PACKAGE_CONFIG } from "./constants";
 
 export interface CalcProps {}
 
@@ -204,8 +205,8 @@ const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
 
 // Default state matching the minimal requirements for calculation
 const initialUserInput: UserInput = {
-  buchungenProMonat: null, // Example: 20/month * 12 = 240/year (STARTER range)
-  anzahlMitarbeitende: null, // Example: 1 (STARTER range)
+  buchungenProMonat: 0, // Example: 20/month * 12 = 240/year (STARTER range)
+  anzahlMitarbeitende: 0, // Example: 1 (STARTER range)
   mehrwertsteuerStatus: MwstStatus.BALANCE,
   rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
 };
@@ -215,17 +216,17 @@ const initialUserInput: UserInput = {
  */
 export const Calculator = () => {
   const [input, setInput] = React.useState<UserInput>(initialUserInput);
+  const [result, setResult] = React.useState<CalculationResult>();
 
-  // Memoize the calculation for performance
-  const result = React.useMemo(() => {
+  const handleButtonClick = React.useCallback(() => {
     // Ensure minimum values are met before calculation
     const safeInput: UserInput = {
       ...input,
       buchungenProMonat: Math.max(0, input.buchungenProMonat),
       anzahlMitarbeitende: Math.max(0, input.anzahlMitarbeitende),
     };
-    return calculateFullPrice(safeInput);
-  }, [input]);
+    setResult(calculateFullPrice(safeInput));
+  }, [result]);
 
   const handleInputChange = React.useCallback(
     <K extends keyof UserInput>(key: K, value: UserInput[K]) => {
@@ -301,22 +302,46 @@ export const Calculator = () => {
             }
           />
         </div>
+        <button
+          onClick={handleButtonClick}
+          className="bg-brand-500 text-white px-8 py-3 rounded-sm cursor-pointer hover:bg-dark-900 transition-all"
+        >
+          Jetzt berechnen
+        </button>
       </div>
 
       {/* --- Right Column: Results --- */}
-      <div
-        className={`p-8 sm:p-10 flex flex-col justify-center transition-all duration-300 ${
-          result.selectedPackage.name === "STARTER"
-            ? "bg-green-50"
-            : result.selectedPackage.name === "SMART"
-            ? "bg-blue-50"
-            : result.selectedPackage.name === "COMFORT"
-            ? "bg-purple-50"
-            : "bg-red-50"
-        }`}
-      >
-        <ResultCard result={result} />
-      </div>
+      {result ? (
+        <div
+          className={`p-8 sm:p-10 flex flex-col justify-center transition-all duration-300 ${
+            result.selectedPackage.name === "PREMIUM"
+              ? "bg-brand-600"
+              : "bg-blue-800"
+          }`}
+        >
+          <ResultCard result={result} />
+        </div>
+      ) : (
+        <div
+          className={`p-8 sm:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 bg-blue-500`}
+        >
+          <div className="w-full">
+            <ResultCard
+              result={{
+                selectedPackage: PACKAGE_CONFIG.STARTER,
+                monthlyPriceCHF: 0,
+                annualPriceCHF: 0,
+                annualBookings: 1 * 12,
+                extraBookings: 1,
+                extraEmployees: 1,
+                bookingSurcharge: 1,
+                employeeSurcharge: 1,
+                basePriceComponent: 100,
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
