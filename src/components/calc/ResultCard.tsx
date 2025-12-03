@@ -41,7 +41,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   const PackageDescription = PACKAGE_COMPONENTS[selectedPackage.name];
 
   return (
-    <div className="p-6 bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
+    <div className="p-6 w-full max-w-lg mx-auto bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
       <div className="flex justify-between items-end">
         <div className="flex flex-col items-start">
           {/* <span */}
@@ -52,19 +52,26 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
           {/*   {selectedPackage.name} */}
           {/* </span> */}
           <span className={`mt-2`}>Ihr empfohlenes Paket</span>
-          <h2
-            className={`mt-2 text-3xl ${packageColors[selectedPackage.name]}`}
+          <h3
+            className={`mt-2 text-3xl font-medium ${
+              packageColors[selectedPackage.name]
+            }`}
           >
             {isPreview ? "???" : selectedPackage.name}
-          </h2>
+          </h3>
         </div>
-        <span
-          className={`text-3xl font-extrabold ${
-            packageColors[selectedPackage.name]
-          }`}
-        >
-          {isPreview ? "CHF ???" : formatCHF(monthlyPriceCHF)}
-        </span>
+        <div className="flex flex-col items-end">
+          <span className="text-base text-gray-500 font-medium">
+            Preis pro Monat
+          </span>
+          <span
+            className={`text-3xl font-extrabold ${
+              packageColors[selectedPackage.name]
+            }`}
+          >
+            {isPreview ? "CHF ???" : formatCHF(monthlyPriceCHF)}
+          </span>
+        </div>
       </div>
 
       <div className="border-t border-gray-200 space-y-4">

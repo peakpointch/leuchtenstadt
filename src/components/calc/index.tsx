@@ -18,6 +18,8 @@ const initialUserInput: UserInput = {
   rechtsform: null,
 };
 
+type InputKey = keyof UserInput;
+
 export interface CalcProps {}
 
 /**
@@ -26,10 +28,34 @@ export interface CalcProps {}
 export const Calculator: React.FC<CalcProps> = () => {
   const [input, setInput] = React.useState<UserInput>(initialUserInput);
   const [result, setResult] = React.useState<CalculationResult>();
+  const [validationErrors, setValidationErrors] = React.useState<Set<InputKey>>(
+    new Set()
+  );
 
   const handleButtonClick = React.useCallback(() => {
+    const errors = new Set<InputKey>();
+
+    // Check all properties in the input object
     for (const key in input) {
-      if (!input[key] && input[key] !== 0) return;
+      // Use Object.prototype.hasOwnProperty.call for safer iteration
+      if (Object.prototype.hasOwnProperty.call(input, key)) {
+        const value = input[key];
+
+        // Validation Logic:
+        // Check for falsy values, but specifically allow 0 (for number inputs)
+        // and exclude 'unset' which you are using for your select inputs
+        if ((!value && value !== 0) || value === "unset") {
+          errors.add(key as InputKey);
+        }
+      }
+    }
+
+    // Update the error state
+    setValidationErrors(errors);
+
+    // If there are any errors, stop here
+    if (errors.size > 0) {
+      return;
     }
 
     // Ensure minimum values are met before calculation
@@ -44,6 +70,17 @@ export const Calculator: React.FC<CalcProps> = () => {
   const handleInputChange = React.useCallback(
     <K extends keyof UserInput>(key: K, value: UserInput[K]) => {
       setInput((prev) => ({ ...prev, [key]: value }));
+      // Remove the current key from the errors set
+      setValidationErrors((prevErrors) => {
+        if (prevErrors.has(key)) {
+          // Create a new Set without the current key
+          const newErrors = new Set(prevErrors);
+          newErrors.delete(key);
+          return newErrors;
+        }
+        // If the key wasn't in the set, return the original set
+        return prevErrors;
+      });
     },
     []
   );
@@ -89,6 +126,7 @@ export const Calculator: React.FC<CalcProps> = () => {
             value={input.buchungenProMonat}
             onChange={(val) => handleInputChange("buchungenProMonat", val)}
             min={0}
+            isInvalid={validationErrors.has("buchungenProMonat")}
           />
 
           <NumberInput
@@ -97,6 +135,7 @@ export const Calculator: React.FC<CalcProps> = () => {
             value={input.anzahlMitarbeitende}
             onChange={(val) => handleInputChange("anzahlMitarbeitende", val)}
             min={0}
+            isInvalid={validationErrors.has("anzahlMitarbeitende")}
           />
 
           <SelectInput
@@ -106,6 +145,7 @@ export const Calculator: React.FC<CalcProps> = () => {
             onChange={(val) =>
               handleInputChange("mehrwertsteuerStatus", val as MwstStatus)
             }
+            isInvalid={validationErrors.has("mehrwertsteuerStatus")}
           />
 
           <SelectInput
@@ -115,6 +155,7 @@ export const Calculator: React.FC<CalcProps> = () => {
             onChange={(val) =>
               handleInputChange("rechtsform", val as LegalForm)
             }
+            isInvalid={validationErrors.has("rechtsform")}
           />
         </div>
         <button
