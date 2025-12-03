@@ -3,222 +3,12 @@ import {
   CalculationResult,
   LegalForm,
   MwstStatus,
-  PricingPackage,
   UserInput,
 } from "./datatypes";
 import { calculateFullPrice } from "./calculator";
-import { PACKAGE_COMPONENTS } from "./packages";
 import { PACKAGE_CONFIG } from "./constants";
-
-export interface CalcProps {}
-
-// Helper function to format currency
-const formatCHF = (amount: number) => {
-  return new Intl.NumberFormat("de-CH", {
-    style: "currency",
-    currency: "CHF",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(amount);
-};
-
-// --- MODULAR COMPONENTS ---
-
-interface InputFieldProps {
-  label: string;
-  value: number;
-  unit?: string;
-  onChange: (value: number) => void;
-  min: number;
-  placeholder?: string;
-}
-
-/**
- * Component for number inputs (Buchungen and Mitarbeiter).
- */
-const NumberInput: React.FC<InputFieldProps> = ({
-  label,
-  value,
-  unit,
-  onChange,
-  min,
-  placeholder,
-}) => (
-  <div className="flex flex-col space-y-2">
-    <label className=" font-medium text-gray-700">{label}</label>
-    <div className="relative flex items-center">
-      <input
-        type="number"
-        min={min}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e) => onChange(parseInt(e.target.value) || min)}
-        className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150"
-      />
-      <span className="absolute pr-9 right-0 top-0 bottom-0 flex items-center text-gray-500 text-sm select-none pointer-events-none">
-        {unit}
-      </span>
-    </div>
-  </div>
-);
-
-interface SelectFieldProps {
-  label: string;
-  value: string;
-  options: Record<string, string>;
-  onChange: (value: string) => void;
-}
-
-/**
- * Component for select inputs (MWST and Legal Form).
- */
-const SelectInput: React.FC<SelectFieldProps> = ({
-  label,
-  value,
-  options,
-  onChange,
-}) => (
-  <div className="flex flex-col space-y-2">
-    <label className="text-sm font-medium text-gray-700">{label}</label>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:border-indigo-500 focus:ring-indigo-500 transition duration-150 appearance-none pr-10"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "right 0.75rem center",
-        backgroundSize: "1.5em 1.5em",
-      }}
-    >
-      {Object.entries(options).map(([key, display]) => (
-        <option key={key} value={key}>
-          {display}
-        </option>
-      ))}
-    </select>
-  </div>
-);
-
-interface ResultCardProps {
-  result: Partial<CalculationResult>;
-}
-
-/**
- * Component to display the final calculated price and package.
- */
-const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
-  const { selectedPackage, monthlyPriceCHF, annualPriceCHF } = result;
-
-  // const packageColors = {
-  //   STARTER: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   SMART: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   COMFORT: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   PREMIUM: "bg-brand-500/10 text-brand-700 ring-brand-500",
-  // };
-
-  const packageColors = {
-    UNKNOWN: "text-blue-700",
-    STARTER: "text-blue-700",
-    SMART: "text-blue-700",
-    COMFORT: "text-blue-700",
-    PREMIUM: "text-brand-500",
-  };
-
-  const isPreview = selectedPackage.name === "UNKNOWN";
-
-  const PackageDescription = PACKAGE_COMPONENTS[selectedPackage.name];
-
-  return (
-    <div className="p-6 bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
-      <div className="flex justify-between items-end">
-        <div className="flex flex-col items-start">
-          {/* <span */}
-          {/*   className={`px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full ring-2 ${ */}
-          {/*     packageColors[selectedPackage.name] */}
-          {/*   }`} */}
-          {/* > */}
-          {/*   {selectedPackage.name} */}
-          {/* </span> */}
-          <span className={`mt-2`}>Ihr empfohlenes Paket</span>
-          <h2
-            className={`mt-2 text-3xl ${packageColors[selectedPackage.name]}`}
-          >
-            {isPreview ? "???" : selectedPackage.name}
-          </h2>
-        </div>
-        <span
-          className={`text-3xl font-extrabold ${
-            packageColors[selectedPackage.name]
-          }`}
-        >
-          {isPreview ? "CHF ???" : formatCHF(monthlyPriceCHF)}
-        </span>
-      </div>
-
-      <div className="border-t border-gray-200 space-y-4">
-        {/* <div className="flex justify-between items-end"> */}
-        {/*   <span className="text-base text-gray-500 font-medium"> */}
-        {/*     Jährlicher Preis */}
-        {/*   </span> */}
-        {/*   <span className="text-xl font-bold text-gray-800"> */}
-        {/*     {formatCHF(annualPriceCHF)} */}
-        {/*   </span> */}
-        {/* </div> */}
-      </div>
-
-      <PackageDescription />
-
-      {/* <PriceBreakdown result={result} /> */}
-    </div>
-  );
-};
-
-/**
- * Component to display the detailed price breakdown.
- */
-const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
-  const {
-    selectedPackage,
-    basePriceComponent,
-    bookingSurcharge,
-    employeeSurcharge,
-    extraBookings,
-    extraEmployees,
-  } = result;
-
-  return (
-    <div className="mt-6 pt-4 border-t border-gray-100 text-sm">
-      <h3 className="font-semibold text-gray-700 mb-3">Preiszusammenfassung</h3>
-      <ul className="space-y-2 text-gray-600">
-        <li className="flex justify-between">
-          <span>Basispreis ({selectedPackage.name})</span>
-          <span className="font-medium">{formatCHF(basePriceComponent)}</span>
-        </li>
-        {bookingSurcharge > 0 && (
-          <li className="flex justify-between text-yellow-700">
-            <span>Zuschlag Buchungen ({extraBookings} zusätzlich)</span>
-            <span className="font-medium">{formatCHF(bookingSurcharge)}</span>
-          </li>
-        )}
-        {employeeSurcharge > 0 && (
-          <li className="flex justify-between text-yellow-700">
-            <span>Zuschlag Mitarbeitende ({extraEmployees} zusätzlich)</span>
-            <span className="font-medium">{formatCHF(employeeSurcharge)}</span>
-          </li>
-        )}
-        <li className="flex justify-between font-bold border-t pt-2 mt-2 border-gray-200 text-gray-800">
-          <span>Gesamtpreis Monatlich</span>
-          <span>
-            {formatCHF(
-              basePriceComponent + bookingSurcharge + employeeSurcharge
-            )}
-          </span>
-        </li>
-      </ul>
-    </div>
-  );
-};
+import { ResultCard } from "./ResultCard";
+import { NumberInput, SelectInput } from "./inputFields";
 
 // Default state matching the minimal requirements for calculation
 const initialUserInput: UserInput = {
@@ -228,10 +18,12 @@ const initialUserInput: UserInput = {
   rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
 };
 
+export interface CalcProps {}
+
 /**
  * Main Application Component (equivalent to the user's `Calculator` component).
  */
-export const Calculator = () => {
+export const Calculator: React.FC<CalcProps> = () => {
   const [input, setInput] = React.useState<UserInput>(initialUserInput);
   const [result, setResult] = React.useState<CalculationResult>();
 
