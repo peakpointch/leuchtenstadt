@@ -226,7 +226,7 @@ export const Calculator = () => {
       anzahlMitarbeitende: Math.max(0, input.anzahlMitarbeitende),
     };
     setResult(calculateFullPrice(safeInput));
-  }, [result]);
+  }, [result, input]);
 
   const handleInputChange = React.useCallback(
     <K extends keyof UserInput>(key: K, value: UserInput[K]) => {
