@@ -12,10 +12,10 @@ import { NumberInput, SelectInput } from "./inputFields";
 
 // Default state matching the minimal requirements for calculation
 const initialUserInput: UserInput = {
-  buchungenProMonat: 0, // Example: 20/month * 12 = 240/year (STARTER range)
-  anzahlMitarbeitende: 0, // Example: 1 (STARTER range)
-  mehrwertsteuerStatus: MwstStatus.BALANCE,
-  rechtsform: LegalForm.SOLE_PROPRIETORSHIP,
+  buchungenProMonat: null,
+  anzahlMitarbeitende: null,
+  mehrwertsteuerStatus: null,
+  rechtsform: null,
 };
 
 export interface CalcProps {}
@@ -28,6 +28,10 @@ export const Calculator: React.FC<CalcProps> = () => {
   const [result, setResult] = React.useState<CalculationResult>();
 
   const handleButtonClick = React.useCallback(() => {
+    for (const key in input) {
+      if (!input[key] && input[key] !== 0) return;
+    }
+
     // Ensure minimum values are met before calculation
     const safeInput: UserInput = {
       ...input,
@@ -47,6 +51,7 @@ export const Calculator: React.FC<CalcProps> = () => {
   // Options mapping for select inputs
   const mwstOptions = React.useMemo(
     () => ({
+      unset: "Bitte anwählen",
       [MwstStatus.NONE]: MwstStatus.NONE,
       [MwstStatus.BALANCE]: MwstStatus.BALANCE,
       [MwstStatus.EFFECTIVE]: MwstStatus.EFFECTIVE,
@@ -57,6 +62,7 @@ export const Calculator: React.FC<CalcProps> = () => {
 
   const legalFormOptions = React.useMemo(
     () => ({
+      unset: "Bitte anwählen",
       [LegalForm.SOLE_PROPRIETORSHIP]: LegalForm.SOLE_PROPRIETORSHIP,
       [LegalForm.GMBH]: LegalForm.GMBH,
       [LegalForm.AG]: LegalForm.AG,
