@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+/* Add any custom global styles below the directives */
+body {
+  font-family: "Inter", sans-serif; /* Using Inter as a standard modern font */
+}

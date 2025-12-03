@@ -1,13 +1,14 @@
 export enum MwstStatus {
-  NONE_OR_BALANCE = "Keine Mehrwertsteuer / Saldo Abrechnungsverfahren",
+  NONE = "Keine Mehrwertsteuer",
+  BALANCE = "Saldo Abrechnungsverfahren",
   EFFECTIVE = "Effektive Abrechnungsmethode",
   UNKNOWN = "Ich weiss es nicht",
   ALL_METHODS = "Alle Methoden (Internal for Package Config)",
 }
 
 export enum LegalForm {
-  AG = "AG",
-  GMBH = "GMBH",
+  AG = "AG (Aktiengesellschaft)",
+  GMBH = "GMBH (Gesellschaft mit beschränkter Haftung)",
   SOLE_PROPRIETORSHIP = "Einzelfirma",
 }
 
