@@ -1,5 +1,3 @@
-import * as crypto from "crypto";
-
 export async function submitFormData(
   siteId: string,
   formData: any
@@ -27,8 +25,37 @@ export async function submitFormData(
   }
 }
 
-export function createSubmissionHash(data: any, timestamp: number): string {
+function sortKeys(obj: any): any {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(sortKeys);
+  }
+
+  return Object.keys(obj)
+    .sort()
+    .reduce((result, key) => {
+      result[key] = sortKeys(obj[key]);
+      return result;
+    }, {} as any);
+}
+
+export async function createSubmissionHash(
+  data: any,
+  timestamp: number
+): Promise<string> {
   const dataWithTimestamp = { ...data, timestamp };
-  const jsonString = JSON.stringify(dataWithTimestamp);
-  return crypto.createHash("sha256").update(jsonString).digest("hex");
+  const sortedObj = sortKeys(dataWithTimestamp);
+  const jsonString = JSON.stringify(sortedObj);
+
+  const encoder = new TextEncoder();
+  const encoded = encoder.encode(jsonString);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", encoded);
+
+  // Convert to hex string
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }

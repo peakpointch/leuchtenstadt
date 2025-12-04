@@ -45,7 +45,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
 
     if (!isValid) return;
 
-    const submissionId = createSubmissionHash(data, Date.now());
+    const submissionId = await createSubmissionHash(data, Date.now());
 
     const wfSubmission = {
       name: "Calculator",
