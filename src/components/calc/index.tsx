@@ -139,7 +139,7 @@ const InputFormStep: React.FC<FormStepProps> = ({
         name="legalForm"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field>
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>
               Welche Rechtsform hat Ihr Unternehmen?
             </FieldLabel>
@@ -216,7 +216,10 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
       <div className="text-gray-700 space-y-8">
         <p>Gemäss Ihren Angaben ist unsere unverbindliche Offerte:</p>
         <div className="text-center text-3xl font-bold text-blue-700 bg-brand-100 border border-solid border-brand-300 rounded-sm p-4">
-          <span className="">{formatCHF(result.monthlyPriceCHF)}</span>
+          <span>
+            {formatCHF(result.monthlyPriceCHF)}
+            <span className="text-sm font-normal text-gray-600"> /Monat</span>
+          </span>
         </div>
         <p>
           Zufrieden mit dem Ergebnis? Fordern Sie jetzt Ihre persönliche und
@@ -309,6 +312,24 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
   </div>
 );
 
+export const FormSuccess: React.FC = () => {
+  return (
+    <div className="h-full flex flex-col justify-between space-y-8">
+      <div className="space-y-8">
+        <h2 className="text-4xl font-extrabold text-gray-800">
+          Berechnen Sie jetzt Ihre{" "}
+          <em className="italic text-brand-500">Treuhand-Offerte</em>
+        </h2>
+        <div className="text-gray-700 space-y-8">
+          <div className="text-center font-medium text-blue-700 bg-blue-50 border border-solid border-blue-300 rounded-sm p-4">
+            Vielen Dank, wir haben Ihre Anfrage erhalten!
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- MAIN APPLICATION COMPONENT ---
 
 export const Calculator: React.FC = () => {
@@ -355,10 +376,9 @@ export const Calculator: React.FC = () => {
       wfSubmission
     );
 
-    // const success = true;
-
     if (success) {
-      console.log("DATA SUBMITTED:", wfSubmission);
+      // Render success state
+      setStep(3);
     }
   };
 
@@ -375,7 +395,6 @@ export const Calculator: React.FC = () => {
     if (!isValid) return;
 
     const fields = form.getValues();
-    console.log("VALUES ON CLICK:", fields);
 
     const userInput: UserInput = {
       ...(fields as any as UserInput),
@@ -406,19 +425,20 @@ export const Calculator: React.FC = () => {
         {step === 2 && result && (
           <ClosingStep form={form} onBack={handleBack} result={result} />
         )}
+        {step === 3 && result && <FormSuccess />}
       </form>
 
       {/* --- Right Column: Results Card (Always Visible) --- */}
       <div
         className={`p-8 sm:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 ${
           result?.selectedPackage?.name === "PREMIUM"
-            ? "bg-brand-200"
+            ? "bg-brand-500"
             : "bg-blue-800"
         }`}
       >
         <ResultCard
           result={
-            step === 2
+            step !== 1
               ? result
               : {
                   selectedPackage: PACKAGE_CONFIG.UNKNOWN,
