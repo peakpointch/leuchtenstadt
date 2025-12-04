@@ -2,7 +2,7 @@ import { Calculator } from "./index";
 import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../main.css";
+import "@/styles/globals.css";
 
 export default declareComponent(Calculator, {
   name: "Calculator",

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Calculator from "./calculator";
-import "./main.css";
+import "../styles/globals.css";
 
 // Import any component inside your repo:
 
