@@ -1,26 +1,19 @@
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
-  CalculationResult,
-  LegalForm,
-  MwstStatus,
-  FormSchema,
   formSchema,
+  CalculationResult,
+  FormSchema,
   UserInput,
 } from "./datatypes";
-import { calculateFullPrice, formatCHF } from "./core";
+import { calculateFullPrice } from "./core";
 import { PACKAGE_CONFIG } from "./constants";
-import { ResultCard } from "./ResultCard";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select";
 import { submitFormData } from "./form";
+import CalculationStep from "./CalculationStep";
+import ClosingStep from "./ClosingStep";
+import FormSuccess from "./FormSuccess";
+import ResultCard from "./ResultCard";
 
 // src/types/gtm.d.ts
 declare global {
@@ -31,313 +24,6 @@ declare global {
     }>;
   }
 }
-
-// --- MULTI-STEP COMPONENTS ---
-
-interface FormStepProps {
-  form: UseFormReturn<FormSchema, any, any>;
-  handleCalculate: () => void;
-}
-
-const InputFormStep: React.FC<FormStepProps> = ({
-  form,
-  handleCalculate: handleButtonClick,
-}) => (
-  <>
-    <h2 className="text-4xl font-extrabold text-gray-800">
-      Berechnen Sie jetzt Ihre{" "}
-      <em className="italic text-brand-500">Treuhand-Offerte</em>
-    </h2>
-    <p className="text-gray-500">
-      Passen Sie die Werte an, um Ihr empfohlenes Paket und den monatlichen
-      Preis zu sehen.
-    </p>
-
-    <div className="space-y-6">
-      <Controller
-        name="bookingsPerMonth"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>
-              Wie viele Buchungen pro Monat haben Sie?
-            </FieldLabel>
-            <Input
-              {...field}
-              id={field.name}
-              type="number"
-              placeholder="Zahl eingeben"
-              min={0}
-              autoComplete="off"
-              aria-invalid={fieldState.invalid}
-              onInput={(e) => {
-                field.onChange(e);
-                form.clearErrors(field.name);
-              }}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      <Controller
-        name="employees"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>
-              Wie viele Personen erhalten einen Lohn?
-            </FieldLabel>
-            <Input
-              {...field}
-              id={field.name}
-              type="number"
-              placeholder="Zahl eingeben"
-              min={0}
-              autoComplete="off"
-              aria-invalid={fieldState.invalid}
-              onInput={(e) => {
-                field.onChange(e);
-                form.clearErrors(field.name);
-              }}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      <Controller
-        name="mwstStatus"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>
-              Sind Sie für die Mehrwertsteuer angemeldet?
-            </FieldLabel>
-            <NativeSelect
-              {...field}
-              id={field.name}
-              aria-invalid={fieldState.invalid}
-              onInput={(e) => {
-                field.onChange(e);
-                form.clearErrors(field.name);
-              }}
-            >
-              <NativeSelectOption value="">Bitte anwählen</NativeSelectOption>
-              <NativeSelectOption value={MwstStatus.NONE}>
-                {MwstStatus.NONE}
-              </NativeSelectOption>
-              <NativeSelectOption value={MwstStatus.BALANCE}>
-                {MwstStatus.BALANCE}
-              </NativeSelectOption>
-              <NativeSelectOption value={MwstStatus.EFFECTIVE}>
-                {MwstStatus.EFFECTIVE}
-              </NativeSelectOption>
-              <NativeSelectOption value={MwstStatus.UNKNOWN}>
-                {MwstStatus.UNKNOWN}
-              </NativeSelectOption>
-            </NativeSelect>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      <Controller
-        name="legalForm"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>
-              Welche Rechtsform hat Ihr Unternehmen?
-            </FieldLabel>
-            <NativeSelect
-              {...field}
-              id={field.name}
-              aria-invalid={fieldState.invalid}
-              onInput={(e) => {
-                field.onChange(e);
-                form.clearErrors(field.name);
-              }}
-            >
-              <NativeSelectOption value="">Bitte anwählen</NativeSelectOption>
-              <NativeSelectOption value={LegalForm.AG}>
-                {LegalForm.AG}
-              </NativeSelectOption>
-              <NativeSelectOption value={LegalForm.GMBH}>
-                {LegalForm.GMBH}
-              </NativeSelectOption>
-              <NativeSelectOption value={LegalForm.SOLE_PROPRIETORSHIP}>
-                {LegalForm.SOLE_PROPRIETORSHIP}
-              </NativeSelectOption>
-            </NativeSelect>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      {/* <SelectInput */}
-      {/*   label="Sind Sie für die Mehrwertsteuer angemeldet?" */}
-      {/*   value={input.mehrwertsteuerStatus} */}
-      {/*   options={mwstOptions} */}
-      {/*   onChange={(val) => */}
-      {/*     handleInputChange("mehrwertsteuerStatus", val as MwstStatus) */}
-      {/*   } */}
-      {/*   isInvalid={validationErrors.has("mehrwertsteuerStatus")} */}
-      {/* /> */}
-      {/**/}
-      {/* <SelectInput */}
-      {/*   label="Welche Rechtsform hat Ihr Unternehmen?" */}
-      {/*   value={input.rechtsform} */}
-      {/*   options={legalFormOptions} */}
-      {/*   onChange={(val) => handleInputChange("rechtsform", val as LegalForm)} */}
-      {/*   isInvalid={validationErrors.has("rechtsform")} */}
-      {/* /> */}
-    </div>
-    <ButtonGroup>
-      <ButtonGroup>
-        <Button variant="default" type="button" onClick={handleButtonClick}>
-          Jetzt berechnen
-        </Button>
-      </ButtonGroup>
-    </ButtonGroup>
-  </>
-);
-
-interface ConfirmationStepProps {
-  form: UseFormReturn<FormSchema, any, any>;
-  result: CalculationResult;
-  onBack: () => void;
-}
-
-const ClosingStep: React.FC<ConfirmationStepProps> = ({
-  form,
-  result,
-  onBack,
-}) => (
-  <div className="text-md h-full flex flex-col justify-between space-y-8">
-    <div className="space-y-8">
-      <h2 className="text-4xl font-extrabold">
-        Berechnen Sie jetzt Ihre{" "}
-        <em className="italic text-brand-500">Treuhand-Offerte</em>
-      </h2>
-      <div className="space-y-8">
-        <p>Gemäss Ihren Angaben ist unsere unverbindliche Offerte:</p>
-        <div className="text-center text-3xl font-bold text-blue-700 bg-brand-200 border border-solid border-brand-300 rounded-sm p-4 overflow-hidden">
-          <span>
-            {formatCHF(result.monthlyPriceCHF)}
-            <span className="text-sm font-normal text-gray-600"> /Monat</span>
-          </span>
-        </div>
-        <p className="">
-          Zufrieden mit dem Ergebnis? Fordern Sie jetzt Ihre{" "}
-          <strong>persönliche und unverbindliche Offerte</strong> an.
-        </p>
-      </div>
-    </div>
-
-    <div className="space-y-6">
-      <Controller
-        name="companyName"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>Der Name Ihrer Firma</FieldLabel>
-            <Input
-              {...field}
-              id={field.name}
-              placeholder="Firmenname"
-              min={0}
-              autoComplete="off"
-              aria-invalid={fieldState.invalid}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      <Controller
-        name="phone"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>Telefonnummer</FieldLabel>
-            <Input
-              {...field}
-              id={field.name}
-              type="tel"
-              placeholder="079 123 45 67"
-              min={0}
-              autoComplete="off"
-              aria-invalid={fieldState.invalid}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      <Controller
-        name="email"
-        control={form.control}
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel htmlFor={field.name}>E-Mail Adresse</FieldLabel>
-            <Input
-              {...field}
-              id={field.name}
-              type="email"
-              placeholder="Ihre beste E-Mail Adresse"
-              min={0}
-              autoComplete="off"
-              aria-invalid={fieldState.invalid}
-            />
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-
-      {/* <Input label="Firmenname" placeholder="Ihr Firmenname" /> */}
-      {/* <Input type="phone" label="Telefonnummer" placeholder="079 123 45 67" /> */}
-      {/* <Input */}
-      {/*   type="email" */}
-      {/*   label="E-Mail Adresse" */}
-      {/*   placeholder="Ihre beste E-Mail Adresse" */}
-      {/* /> */}
-    </div>
-
-    <ButtonGroup className="w-full flex-wrap md:flex-nowrap justify-between">
-      <ButtonGroup>
-        <Button variant="outline" onClick={onBack}>
-          zurück
-        </Button>
-      </ButtonGroup>
-      <ButtonGroup>
-        <Button type="submit" variant="secondary">
-          Jetzt unverbindliche Offerte anfragen!
-        </Button>
-      </ButtonGroup>
-    </ButtonGroup>
-  </div>
-);
-
-export const FormSuccess: React.FC = () => {
-  return (
-    <div className="h-full flex flex-col justify-between space-y-8">
-      <div className="space-y-8">
-        <h2 className="text-4xl font-extrabold text-gray-800">
-          Berechnen Sie jetzt Ihre{" "}
-          <em className="italic text-brand-500">Treuhand-Offerte</em>
-        </h2>
-        <div className="text-gray-700 space-y-8">
-          <div className="text-center font-medium text-green-800 bg-green-50 border border-solid border-green-300 rounded-sm p-4">
-            Vielen Dank, wir haben Ihre Anfrage erhalten!
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// --- MAIN APPLICATION COMPONENT ---
 
 export interface CalculatorProps {
   visibility?: boolean;
@@ -400,7 +86,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
     }
   };
 
-  const step1Fields: Array<keyof FormSchema> = [
+  const calcStepFields: Array<keyof FormSchema> = [
     "bookingsPerMonth",
     "employees",
     "mwstStatus",
@@ -408,7 +94,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
   ];
 
   const handleCalculate = React.useCallback(async () => {
-    const isValid = await form.trigger(step1Fields);
+    const isValid = await form.trigger(calcStepFields);
 
     if (!isValid) return;
 
@@ -438,7 +124,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
         data-italic-style="custom"
       >
         {step === 1 && (
-          <InputFormStep form={form} handleCalculate={handleCalculate} />
+          <CalculationStep form={form} handleCalculate={handleCalculate} />
         )}
         {step === 2 && result && (
           <ClosingStep form={form} onBack={handleBack} result={result} />

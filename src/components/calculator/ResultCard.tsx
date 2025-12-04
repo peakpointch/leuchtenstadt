@@ -75,3 +75,5 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
     </div>
   );
 };
+
+export default ResultCard;
