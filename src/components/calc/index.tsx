@@ -61,6 +61,10 @@ const InputFormStep: React.FC<FormStepProps> = ({
               min={0}
               autoComplete="off"
               aria-invalid={fieldState.invalid}
+              onInput={(e) => {
+                field.onChange(e);
+                form.clearErrors(field.name);
+              }}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -83,6 +87,10 @@ const InputFormStep: React.FC<FormStepProps> = ({
               min={0}
               autoComplete="off"
               aria-invalid={fieldState.invalid}
+              onInput={(e) => {
+                field.onChange(e);
+                form.clearErrors(field.name);
+              }}
             />
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>
@@ -101,6 +109,10 @@ const InputFormStep: React.FC<FormStepProps> = ({
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
+              onInput={(e) => {
+                field.onChange(e);
+                form.clearErrors(field.name);
+              }}
             >
               <NativeSelectOption value="">Bitte anwählen</NativeSelectOption>
               <NativeSelectOption value={MwstStatus.NONE}>
@@ -133,6 +145,10 @@ const InputFormStep: React.FC<FormStepProps> = ({
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
+              onInput={(e) => {
+                field.onChange(e);
+                form.clearErrors(field.name);
+              }}
             >
               <NativeSelectOption value="">Bitte anwählen</NativeSelectOption>
               <NativeSelectOption value={LegalForm.AG}>
