@@ -22,7 +22,15 @@ import {
 } from "@/components/ui/native-select";
 import { submitFormData } from "./form";
 
-export interface CalcProps {}
+// src/types/gtm.d.ts
+declare global {
+  interface Window {
+    dataLayer: Array<{
+      event: string;
+      [key: string]: any;
+    }>;
+  }
+}
 
 // --- MULTI-STEP COMPONENTS ---
 
@@ -384,6 +392,11 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
     if (success) {
       // Render success state
       setStep(3);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "form_submitted",
+        form_name: "calculator_offer_request",
+      });
     }
   };
 
