@@ -9,7 +9,7 @@ import {
   formSchema,
   UserInput,
 } from "./datatypes";
-import { calculateFullPrice } from "./calculator";
+import { calculateFullPrice } from "./core";
 import { PACKAGE_CONFIG } from "./constants";
 import { formatCHF, ResultCard } from "./ResultCard";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Calculator } from "./calc/index.tsx";
+import { Calculator } from "./calculator/Calculator.tsx";
 import "./main.css";
 
 // Import any component inside your repo:

@@ -1,4 +1,4 @@
-import { calculateFullPrice } from "./calculator";
+import { calculateFullPrice } from "./core";
 import { MwstStatus, LegalForm, PackageName, UserInput } from "./datatypes";
 
 /**
