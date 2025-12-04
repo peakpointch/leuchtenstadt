@@ -1,9 +1,10 @@
 import { Controller, UseFormReturn } from "react-hook-form";
-import { FormSchema } from "./datatypes";
+import { FormSchema, LegalForm, MwstStatus } from "./datatypes";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { ButtonGroup } from "../ui/button-group";
 import { Button } from "../ui/button";
+import { NativeSelect, NativeSelectOption } from "../ui/native-select";
 
 export interface CalculationStepProps {
   form: UseFormReturn<FormSchema, any, any>;
