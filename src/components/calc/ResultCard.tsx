@@ -21,13 +21,6 @@ export interface ResultCardProps {
 export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   const { selectedPackage, monthlyPriceCHF, annualPriceCHF } = result;
 
-  // const packageColors = {
-  //   STARTER: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   SMART: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   COMFORT: "bg-blue-500/10 text-blue-700 ring-blue-500",
-  //   PREMIUM: "bg-brand-500/10 text-brand-700 ring-brand-500",
-  // };
-
   const packageColors = {
     UNKNOWN: "text-blue-700",
     STARTER: "text-blue-700",
@@ -41,8 +34,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   const PackageDescription = PACKAGE_COMPONENTS[selectedPackage.name];
 
   return (
-    <div className="p-6 w-full max-w-lg mx-auto bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
-      <div className="flex justify-between items-end">
+    <div className="@container p-6 w-full max-w-lg mx-auto bg-white border border-gray-100 rounded-xl shadow-2xl space-y-6">
+      <div className="flex flex-col gap-4 @sm:flex-row justify-between @sm:items-end">
         <div className="flex flex-col items-start">
           {/* <span */}
           {/*   className={`px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full ring-2 ${ */}
@@ -60,7 +53,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
             {isPreview ? "???" : selectedPackage.name}
           </h3>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col @sm:items-end">
           <span className="text-base text-gray-500 font-medium">
             Preis pro Monat
           </span>
@@ -80,7 +73,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
         {/*     Jährlicher Preis */}
         {/*   </span> */}
         {/*   <span className="text-xl font-bold text-gray-800"> */}
-        {/*     {formatCHF(annualPriceCHF)} */}
+        {/*     {annualPriceCHF !== undefined ? formatCHF(annualPriceCHF) : 'N/A'} */}
         {/*   </span> */}
         {/* </div> */}
       </div>

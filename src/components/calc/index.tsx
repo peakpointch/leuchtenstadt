@@ -214,7 +214,7 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
       </h2>
       <div className="text-gray-700 space-y-8">
         <p>Gemäss Ihren Angaben ist unsere unverbindliche Offerte:</p>
-        <div className="text-center text-3xl font-bold text-blue-700 bg-brand-100 border border-solid border-brand-300 rounded-sm p-4">
+        <div className="text-center text-3xl font-bold text-blue-700 bg-brand-100 border border-solid border-brand-300 rounded-sm p-4 overflow-hidden">
           <span>
             {formatCHF(result.monthlyPriceCHF)}
             <span className="text-sm font-normal text-gray-600"> /Monat</span>
@@ -296,7 +296,7 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
       {/* /> */}
     </div>
 
-    <ButtonGroup className="w-full justify-between">
+    <ButtonGroup className="w-full flex-wrap md:flex-nowrap justify-between">
       <ButtonGroup>
         <Button variant="outline" onClick={onBack}>
           zurück
@@ -416,7 +416,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
   }, []);
 
   return visibility ? (
-    <div className="w-full grid md:grid-cols-2 gap-10">
+    <div className="w-full flex flex-col md:grid md:grid-cols-2 gap-10">
       {/* --- Left Column: Dynamic Step Content --- */}
       <form
         id="calculator"
@@ -435,7 +435,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
 
       {/* --- Right Column: Results Card (Always Visible) --- */}
       <div
-        className={`p-8 sm:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 ${
+        className={`p-4 sm:p-8 md:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 ${
           result?.selectedPackage?.name === "PREMIUM"
             ? "bg-brand-500"
             : "bg-blue-800"

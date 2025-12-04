@@ -7,7 +7,7 @@ import "./main.css";
 
 function App() {
   return (
-    <div style={{ padding: 40 }}>
+    <div className="p-4 md:p-8">
       <Calculator></Calculator>
     </div>
   );
