@@ -9,9 +9,9 @@ import {
   formSchema,
   UserInput,
 } from "./datatypes";
-import { calculateFullPrice } from "./core";
+import { calculateFullPrice, formatCHF } from "./core";
 import { PACKAGE_CONFIG } from "./constants";
-import { formatCHF, ResultCard } from "./ResultCard";
+import { ResultCard } from "./ResultCard";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";

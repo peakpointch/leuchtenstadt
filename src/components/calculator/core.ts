@@ -197,3 +197,13 @@ export function calculateFullPrice(input: UserInput): CalculationResult {
   // 2. Calculate the price
   return calculatePrice(input, selectedPackage);
 }
+
+// Helper function to format currency
+export const formatCHF = (amount: number) => {
+  return new Intl.NumberFormat("de-CH", {
+    style: "currency",
+    currency: "CHF",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
