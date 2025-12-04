@@ -1,7 +1,7 @@
 module.exports = {
   resolve: {
     alias: {
-      "@": process.cwd(), // Maps @ to your project root
+      "@/": `${process.cwd()}/src`,
     },
   },
 };
