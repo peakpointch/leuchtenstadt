@@ -1,10 +1,10 @@
 import { formatCHF } from "./core";
-import { ResultCardProps } from "./ResultCard";
+import { ResultCardProps } from "./PackageCard";
 
 /**
  * Component to display the detailed price breakdown.
  */
-const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
+export const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
   const {
     selectedPackage,
     basePriceComponent,
@@ -46,3 +46,5 @@ const PriceBreakdown: React.FC<ResultCardProps> = ({ result }) => {
     </div>
   );
 };
+
+export default PriceBreakdown;
