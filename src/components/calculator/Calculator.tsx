@@ -30,13 +30,9 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      //@ts-ignore
       bookingsPerMonth: "",
-      //@ts-ignore
       employees: "",
-      //@ts-ignore
       mwstStatus: "",
-      //@ts-ignore
       legalForm: "",
       companyName: "",
       phone: "",
