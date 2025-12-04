@@ -76,11 +76,11 @@ const property_to_custom_prop = () => ({
                 decl.value = shadowValue;
                 shadowsProcessed++;
 
-                if (process.env.NODE_ENV !== "production") {
-                  console.log(
-                    `🔧 PostCSS: Fixed direct shadow ${rule.selector} -> ${shadowValue}`
-                  );
-                }
+                // if (process.env.NODE_ENV !== "production") {
+                //   console.log(
+                //     `🔧 PostCSS: Fixed direct shadow ${rule.selector} -> ${shadowValue}`
+                //   );
+                // }
                 return; // Don't process further if we handled direct values
               }
               // Extract shadow from --tw-shadow variable if present
@@ -167,12 +167,12 @@ const property_to_custom_prop = () => ({
                   decl.value = shadowValue;
                   shadowsProcessed++;
 
-                  // Debug logging in development
-                  if (process.env.NODE_ENV !== "production") {
-                    console.log(
-                      `🔧 PostCSS: Fixed shadow ${rule.selector} -> ${shadowValue}`
-                    );
-                  }
+                  // // Debug logging in development
+                  // if (process.env.NODE_ENV !== "production") {
+                  //   console.log(
+                  //     `🔧 PostCSS: Fixed shadow ${rule.selector} -> ${shadowValue}`
+                  //   );
+                  // }
                 });
 
                 // Remove the Tailwind variable declarations as they're no longer needed
@@ -269,15 +269,28 @@ const property_to_custom_prop = () => ({
             );
           }
 
-          root.prepend(root_rule);
+          // Find the last @import rule
+          let lastImportIndex = -1;
+          root.each((node, index) => {
+            if (node.type === "atrule" && node.name === "import") {
+              lastImportIndex = index;
+            }
+          });
+
+          // Insert after the last @import, or at the beginning if no imports
+          if (lastImportIndex >= 0) {
+            root.insertAfter(lastImportIndex, root_rule);
+          } else {
+            root.prepend(root_rule);
+          }
         }
 
-        // Debug logging
-        if (process.env.NODE_ENV !== "production" && shadowsProcessed > 0) {
-          console.log(
-            `✅ PostCSS: Processed ${shadowsProcessed} shadow utilities for Shadow DOM`
-          );
-        }
+        // // Debug logging
+        // if (process.env.NODE_ENV !== "production" && shadowsProcessed > 0) {
+        //   console.log(
+        //     `✅ PostCSS: Processed ${shadowsProcessed} shadow utilities for Shadow DOM`
+        //   );
+        // }
       },
     };
   },
