@@ -15,16 +15,6 @@ import ClosingStep from "./ClosingStep";
 import FormSuccess from "./FormSuccess";
 import PackageCard from "./PackageCard";
 
-// src/types/gtm.d.ts
-declare global {
-  interface Window {
-    dataLayer: Array<{
-      event: string;
-      [key: string]: any;
-    }>;
-  }
-}
-
 export interface CalculatorProps {
   visibility?: boolean;
 }
