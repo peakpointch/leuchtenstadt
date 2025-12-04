@@ -4,6 +4,15 @@
     "components": [
       "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
-    "bundleConfig": "./webpack.webflow.js"
+    "bundleConfig": "./webpack.webflow.cjs",
+    "description": "Developed by Peakpoint",
+    "id": "leuchtenstadt-treuhand-components"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1764855341220,
+      "version": "1.8.49"
+    }
   }
 }
