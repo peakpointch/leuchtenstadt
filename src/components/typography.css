@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@theme {
+  --font-display: "Kaisei Decol", serif;
+  --default-font-family: "Montserrat", sans-serif;
+  --font-sans: "Montserrat";
+
+  --text-sm: clamp(
+    0.875 * 1rem,
+    (
+      (
+          0.875 -
+            (
+              (1 - 0.875) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((1 - 0.875) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    1 * 1rem
+  );
+  --text-md: clamp(
+    1 * 1rem,
+    (
+      (
+          1 -
+            (
+              (1.125 - 1) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    1.125 * 1rem
+  );
+  --text-lg: clamp(
+    1.125 * 1rem,
+    (
+      (
+          1.125 -
+            (
+              (1.25 - 1.125) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        (
+          (1.25 - 1.125) /
+            (var(--site--viewport-max) - var(--site--viewport-min))
+        ) * 100vw
+    ),
+    1.25 * 1rem
+  );
+  --text-xl: clamp(
+    1 * 1rem,
+    (
+      (
+          1 -
+            (
+              (1.125 - 1) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((1.125 - 1) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    1.125 * 1rem
+  );
+  --text-2xl: clamp(
+    1.375 * 1rem,
+    (
+      (
+          1.375 -
+            (
+              (1.5 - 1.375) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        (
+          (1.5 - 1.375) /
+            (var(--site--viewport-max) - var(--site--viewport-min))
+        ) * 100vw
+    ),
+    1.5 * 1rem
+  );
+  --text-3xl: clamp(
+    1.75 * 1rem,
+    (
+      (
+          1.75 -
+            (
+              (2 - 1.75) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((2 - 1.75) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    2 * 1rem
+  );
+  --text-4xl: clamp(
+    2.25 * 1rem,
+    (
+      (
+          2.25 -
+            (
+              (3 - 2.25) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((3 - 2.25) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    3 * 1rem
+  );
+  --text-5xl: clamp(
+    2.5 * 1rem,
+    (
+      (
+          2.5 -
+            (
+              (4 - 2.5) /
+                (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((4 - 2.5) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    4 * 1rem
+  );
+  --text-6xl: clamp(
+    3 * 1rem,
+    (
+      (
+          3 -
+            (
+              (5 - 3) / (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((5 - 3) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    5 * 1rem
+  );
+  --text-display: clamp(
+    4 * 1rem,
+    (
+      (
+          4 -
+            (
+              (7 - 4) / (var(--site--viewport-max) - var(--site--viewport-min)) *
+                var(--site--viewport-min)
+            )
+        ) * 1rem +
+        ((7 - 4) / (var(--site--viewport-max) - var(--site--viewport-min))) *
+        100vw
+    ),
+    7 * 1rem
+  );
+}
