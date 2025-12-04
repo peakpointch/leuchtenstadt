@@ -333,7 +333,7 @@ export const FormSuccess: React.FC = () => {
 // --- MAIN APPLICATION COMPONENT ---
 
 export interface CalculatorProps {
-  visibility: boolean;
+  visibility?: boolean;
 }
 
 export const Calculator = ({ visibility }: CalculatorProps) => {
