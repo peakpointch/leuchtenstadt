@@ -15,8 +15,11 @@ import {
  * @returns The name of the determined package.
  */
 export function determinePackage(input: UserInput): PackageName {
-  const { buchungenProMonat, anzahlMitarbeitende, mehrwertsteuerStatus } =
-    input;
+  const {
+    bookingsPerMonth: buchungenProMonat,
+    employees: anzahlMitarbeitende,
+    mwstStatus: mehrwertsteuerStatus,
+  } = input;
   const calc_buchungen_jahr = buchungenProMonat * 12;
 
   let determinedPackage: PackageName = "STARTER";
@@ -142,7 +145,10 @@ export function calculatePrice(
   input: UserInput,
   pkg: PricingPackage
 ): CalculationResult {
-  const { buchungenProMonat, anzahlMitarbeitende } = input;
+  const {
+    bookingsPerMonth: buchungenProMonat,
+    employees: anzahlMitarbeitende,
+  } = input;
 
   // --- 1. Calculate Surcharges ---
 

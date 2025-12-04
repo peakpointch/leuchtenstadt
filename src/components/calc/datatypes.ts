@@ -1,3 +1,5 @@
+import * as z from "zod";
+
 export enum MwstStatus {
   NONE = "Keine Mehrwertsteuer",
   BALANCE = "Saldo Abrechnungsverfahren",
@@ -19,16 +21,23 @@ export type PackageName =
   | "PREMIUM"
   | "UNKNOWN";
 
+export const formSchema = z.object({
+  bookingsPerMonth: z
+    .number()
+    .min(0, "Bitte geben Sie die Anzahl Buchungen pro Monat an."),
+  employees: z.number().min(0, "Bitte geben Sie die Anzahl Mitarbeiter an."),
+  mwstStatus: z.enum(MwstStatus),
+  legalForm: z.enum(LegalForm),
+  companyName: z.string().min(1, "Bitte geben Sie Ihren Firmennamen an."),
+  phone: z.string().min(1, "Bitte geben Sie Ihre Telefonnummer an."),
+  email: z.email(),
+});
+
 /**
  * Interface representing the user input collected from the form.
  * Corresponds to Section 2 of the documentation.
  */
-export interface UserInput {
-  buchungenProMonat: number; // Anzahl monatliche Buchungen
-  anzahlMitarbeitende: number; // Anzahl Personen, die einen Lohn erhalten
-  mehrwertsteuerStatus: MwstStatus; // MWST-Status
-  rechtsform: LegalForm; // AG, GmbH oder Einzelfirma
-}
+export type UserInput = z.infer<typeof formSchema>;
 
 /**
  * Interface representing the structure of a defined service package.
