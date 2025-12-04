@@ -321,12 +321,19 @@ export const Calculator: React.FC = () => {
   const fields = form.watch();
 
   const handleButtonClick = React.useCallback(() => {
-    if (Object.values(form.formState.errors).some(Boolean)) {
-      return;
+    const fields = form.getValues();
+    console.log("VALUES ON CLICK:", fields);
+
+    for (let id in fields) {
+      const value = fields[id];
+
+      if (!value && value !== 0) {
+        // MAKE THE ERRORS SHOW!!!
+        return;
+      }
     }
-    const values = form.getValues();
-    console.log("VALUES ON CLICK:", values);
-    setResult(calculateFullPrice(values));
+
+    setResult(calculateFullPrice(fields));
     setStep(2);
   }, [fields]);
 
