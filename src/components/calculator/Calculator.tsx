@@ -13,7 +13,7 @@ import { submitFormData } from "./form";
 import CalculationStep from "./CalculationStep";
 import ClosingStep from "./ClosingStep";
 import FormSuccess from "./FormSuccess";
-import ResultCard from "./ResultCard";
+import PackageCard from "./PackageCard";
 
 // src/types/gtm.d.ts
 declare global {
@@ -140,7 +140,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
             : "bg-blue-700"
         }`}
       >
-        <ResultCard
+        <PackageCard
           result={
             step !== 1
               ? result

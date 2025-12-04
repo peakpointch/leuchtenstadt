@@ -9,7 +9,7 @@ export interface ResultCardProps {
 /**
  * Component to display the final calculated price and package.
  */
-export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
+export const PackageCard: React.FC<ResultCardProps> = ({ result }) => {
   const { selectedPackage, monthlyPriceCHF, annualPriceCHF } = result;
 
   const packageColors = {
@@ -76,4 +76,4 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   );
 };
 
-export default ResultCard;
+export default PackageCard;
