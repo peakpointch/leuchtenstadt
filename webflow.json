@@ -1,0 +1,9 @@
+{
+  "library": {
+    "name": "Leuchtenstadt Treuhand Components",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "bundleConfig": "./webpack.webflow.js"
+  }
+}
