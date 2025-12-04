@@ -20,6 +20,8 @@ import {
   NativeSelect,
   NativeSelectOption,
 } from "@/components/ui/native-select";
+import { submitFormData } from "./form";
+import { success } from "zod";
 
 export interface CalcProps {}
 
@@ -299,7 +301,7 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
         </Button>
       </ButtonGroup>
       <ButtonGroup>
-        <Button variant="default" onClick={onBack}>
+        <Button type="submit" variant="default">
           Jetzt unverbindliche Offerte anfragen!
         </Button>
       </ButtonGroup>
@@ -331,6 +333,34 @@ export const Calculator: React.FC = () => {
       email: "",
     },
   });
+
+  const onSubmit = async (data: FormSchema) => {
+    const isValid = await form.trigger();
+
+    if (!isValid) return;
+
+    const wfSubmission = {
+      name: "Calculator",
+      pageId: "692afc2a8ba6149cbeaa64bc",
+      elementId: "9544fa48-c438-cf4d-5206-ae5df0ba6b4b",
+      source: "https://leuchtenstadt-treuhand.webflow.io/treuhandrechner",
+      test: false,
+      fields: data,
+      dolphin: false,
+    };
+
+    // For anyone wondering: NO, this is NOT an api key. It's a public webflow site id.
+    const success = await submitFormData(
+      "6905f8c5e25bdb3293105e75",
+      wfSubmission
+    );
+
+    // const success = true;
+
+    if (success) {
+      console.log("DATA SUBMITTED:", wfSubmission);
+    }
+  };
 
   const step1Fields: Array<keyof FormSchema> = [
     "bookingsPerMonth",
@@ -366,6 +396,7 @@ export const Calculator: React.FC = () => {
       {/* --- Left Column: Dynamic Step Content --- */}
       <form
         id="calculator"
+        onSubmit={form.handleSubmit(async (data) => onSubmit(data))}
         className="space-y-8 transition-all duration-500 ease-in-out"
         data-italic-style="custom"
       >
