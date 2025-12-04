@@ -27,12 +27,12 @@ export interface CalcProps {}
 
 interface FormStepProps {
   form: UseFormReturn<FormSchema, any, any>;
-  handleButtonClick: () => void;
+  handleCalculate: () => void;
 }
 
 const InputFormStep: React.FC<FormStepProps> = ({
   form,
-  handleButtonClick,
+  handleCalculate: handleButtonClick,
 }) => (
   <>
     <h2 className="text-4xl font-extrabold text-gray-800">
@@ -339,7 +339,7 @@ export const Calculator: React.FC = () => {
     "legalForm",
   ];
 
-  const handleButtonClick = React.useCallback(async () => {
+  const handleCalculate = React.useCallback(async () => {
     const isValid = await form.trigger(step1Fields);
 
     if (!isValid) return;
@@ -370,7 +370,7 @@ export const Calculator: React.FC = () => {
         data-italic-style="custom"
       >
         {step === 1 && (
-          <InputFormStep form={form} handleButtonClick={handleButtonClick} />
+          <InputFormStep form={form} handleCalculate={handleCalculate} />
         )}
         {step === 2 && result && (
           <ClosingStep form={form} onBack={handleBack} result={result} />
