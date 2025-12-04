@@ -206,23 +206,23 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
   result,
   onBack,
 }) => (
-  <div className="h-full flex flex-col justify-between space-y-8">
+  <div className="text-md h-full flex flex-col justify-between space-y-8">
     <div className="space-y-8">
-      <h2 className="text-4xl font-extrabold text-gray-800">
+      <h2 className="text-4xl font-extrabold">
         Berechnen Sie jetzt Ihre{" "}
         <em className="italic text-brand-500">Treuhand-Offerte</em>
       </h2>
-      <div className="text-gray-700 space-y-8">
+      <div className="space-y-8">
         <p>Gemäss Ihren Angaben ist unsere unverbindliche Offerte:</p>
-        <div className="text-center text-3xl font-bold text-blue-700 bg-brand-100 border border-solid border-brand-300 rounded-sm p-4 overflow-hidden">
+        <div className="text-center text-3xl font-bold text-blue-700 bg-brand-200 border border-solid border-brand-300 rounded-sm p-4 overflow-hidden">
           <span>
             {formatCHF(result.monthlyPriceCHF)}
             <span className="text-sm font-normal text-gray-600"> /Monat</span>
           </span>
         </div>
-        <p>
-          Zufrieden mit dem Ergebnis? Fordern Sie jetzt Ihre persönliche und
-          unverbindliche Offerte an.
+        <p className="">
+          Zufrieden mit dem Ergebnis? Fordern Sie jetzt Ihre{" "}
+          <strong>persönliche und unverbindliche Offerte</strong> an.
         </p>
       </div>
     </div>
@@ -303,7 +303,7 @@ const ClosingStep: React.FC<ConfirmationStepProps> = ({
         </Button>
       </ButtonGroup>
       <ButtonGroup>
-        <Button type="submit" variant="default">
+        <Button type="submit" variant="secondary">
           Jetzt unverbindliche Offerte anfragen!
         </Button>
       </ButtonGroup>
@@ -320,7 +320,7 @@ export const FormSuccess: React.FC = () => {
           <em className="italic text-brand-500">Treuhand-Offerte</em>
         </h2>
         <div className="text-gray-700 space-y-8">
-          <div className="text-center font-medium text-blue-700 bg-blue-50 border border-solid border-blue-300 rounded-sm p-4">
+          <div className="text-center font-medium text-green-800 bg-green-50 border border-solid border-green-300 rounded-sm p-4">
             Vielen Dank, wir haben Ihre Anfrage erhalten!
           </div>
         </div>
@@ -438,7 +438,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
         className={`p-4 sm:p-8 md:p-10 flex flex-col justify-center rounded-xl transition-all duration-300 ${
           result?.selectedPackage?.name === "PREMIUM"
             ? "bg-brand-500"
-            : "bg-blue-800"
+            : "bg-blue-700"
         }`}
       >
         <ResultCard

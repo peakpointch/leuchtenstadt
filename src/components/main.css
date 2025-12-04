@@ -79,7 +79,7 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: var(--color-brand-500);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: var(--color-blue-500);
+  --secondary: var(--color-blue-700);
   --secondary-foreground: var(--color-brand-100);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -228,4 +228,8 @@
 [data-italic-style="custom"] :is(h1, h2, h3, h4, h5, h6) em {
   display: inline-block;
   z-index: 0;
+}
+
+strong {
+  @apply font-bold;
 }
