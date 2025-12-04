@@ -337,6 +337,8 @@ export interface CalculatorProps {
 }
 
 export const Calculator = ({ visibility }: CalculatorProps) => {
+  visibility = visibility === undefined ? true : visibility;
+
   const [result, setResult] = React.useState<CalculationResult | undefined>(
     undefined
   );
@@ -415,7 +417,7 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
   }, []);
 
   return visibility ? (
-    <div className="w-full bg-white grid md:grid-cols-2 gap-10">
+    <div className="w-full grid md:grid-cols-2 gap-10">
       {/* --- Left Column: Dynamic Step Content --- */}
       <form
         id="calculator"
