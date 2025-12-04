@@ -1,3 +1,5 @@
+import * as crypto from "crypto";
+
 export async function submitFormData(
   siteId: string,
   formData: any
@@ -23,4 +25,10 @@ export async function submitFormData(
     console.error("Form submission failed:", error);
     return false;
   }
+}
+
+export function createSubmissionHash(data: any, timestamp: number): string {
+  const dataWithTimestamp = { ...data, timestamp };
+  const jsonString = JSON.stringify(dataWithTimestamp);
+  return crypto.createHash("sha256").update(jsonString).digest("hex");
 }

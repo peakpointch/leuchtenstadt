@@ -9,7 +9,7 @@ import {
 } from "./datatypes";
 import { calculateFullPrice } from "./core";
 import { PACKAGE_CONFIG } from "./constants";
-import { submitFormData } from "./form";
+import { createSubmissionHash, submitFormData } from "./form";
 import CalculationStep from "./CalculationStep";
 import ClosingStep from "./ClosingStep";
 import FormSuccess from "./FormSuccess";
@@ -45,13 +45,18 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
 
     if (!isValid) return;
 
+    const submissionId = createSubmissionHash(data, Date.now());
+
     const wfSubmission = {
       name: "Calculator",
       pageId: "692afc2a8ba6149cbeaa64bc",
       elementId: "9544fa48-c438-cf4d-5206-ae5df0ba6b4b",
       source: "https://leuchtenstadt-treuhand.webflow.io/treuhandrechner",
       test: false,
-      fields: data,
+      fields: {
+        ...data,
+        lead_id: submissionId,
+      },
       dolphin: false,
     };
 
@@ -68,6 +73,12 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
       window.dataLayer.push({
         event: "form_submitted",
         form_name: "calculator_offer_request",
+        lead_id: submissionId,
+        lead_email: data.email,
+        lead_bookings_monthly: data.bookingsPerMonth,
+        lead_bookings_annual: result.annualBookings,
+        lead_value_monthly: result.monthlyPriceCHF,
+        lead_value_annual: result.annualPriceCHF,
       });
     }
   };
