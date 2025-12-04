@@ -17,5 +17,20 @@ export default async function initMeetings(): Promise<void> {
         },
       },
     });
+
+    for (let namespace of namespaces) {
+      client.cal.ns[namespace]("on", {
+        action: "bookingSuccessfulV2",
+        callback: (event) => {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "welcome_meeting_cal_bookingSuccessfulV2",
+            cal_uid: event.detail.data.uid,
+            cal_video_call_url: event.detail.data.videoCallUrl,
+            cal_namespace: event.detail.namespace,
+          });
+        },
+      });
+    }
   });
 }
