@@ -1,13 +1,13 @@
 import * as React from "react";
-import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller, UseFormReturn } from "react-hook-form";
 import {
   CalculationResult,
   LegalForm,
   MwstStatus,
-  UserInput,
+  FormSchema,
   formSchema,
+  UserInput,
 } from "./datatypes";
 import { calculateFullPrice } from "./calculator";
 import { PACKAGE_CONFIG } from "./constants";
@@ -21,14 +21,12 @@ import {
   NativeSelectOption,
 } from "@/components/ui/native-select";
 
-type InputKey = keyof UserInput;
-
 export interface CalcProps {}
 
 // --- MULTI-STEP COMPONENTS ---
 
 interface FormStepProps {
-  form: UseFormReturn<z.infer<typeof formSchema>, any, any>;
+  form: UseFormReturn<FormSchema, any, any>;
   handleButtonClick: () => void;
 }
 
@@ -127,7 +125,7 @@ const InputFormStep: React.FC<FormStepProps> = ({
         name="legalForm"
         control={form.control}
         render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
+          <Field>
             <FieldLabel htmlFor={field.name}>
               Welche Rechtsform hat Ihr Unternehmen?
             </FieldLabel>
@@ -181,7 +179,7 @@ const InputFormStep: React.FC<FormStepProps> = ({
 );
 
 interface ConfirmationStepProps {
-  form: UseFormReturn<z.infer<typeof formSchema>, any, any>;
+  form: UseFormReturn<FormSchema, any, any>;
   result: CalculationResult;
   onBack: () => void;
 }
@@ -301,7 +299,7 @@ export const Calculator: React.FC = () => {
   );
   const [step, setStep] = React.useState(1);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       //@ts-ignore
@@ -318,24 +316,30 @@ export const Calculator: React.FC = () => {
     },
   });
 
-  const fields = form.watch();
+  const step1Fields: Array<keyof FormSchema> = [
+    "bookingsPerMonth",
+    "employees",
+    "mwstStatus",
+    "legalForm",
+  ];
 
-  const handleButtonClick = React.useCallback(() => {
+  const handleButtonClick = React.useCallback(async () => {
+    const isValid = await form.trigger(step1Fields);
+
+    if (!isValid) return;
+
     const fields = form.getValues();
     console.log("VALUES ON CLICK:", fields);
 
-    for (let id in fields) {
-      const value = fields[id];
+    const userInput: UserInput = {
+      ...(fields as any as UserInput),
+      bookingsPerMonth: parseInt(fields.bookingsPerMonth),
+      employees: parseInt(fields.employees),
+    };
 
-      if (!value && value !== 0) {
-        // MAKE THE ERRORS SHOW!!!
-        return;
-      }
-    }
-
-    setResult(calculateFullPrice(fields));
+    setResult(calculateFullPrice(userInput));
     setStep(2);
-  }, [fields]);
+  }, [form.trigger, form.getValues]);
 
   const handleBack = React.useCallback(() => {
     setStep(1);
