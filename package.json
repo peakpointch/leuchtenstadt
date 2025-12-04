@@ -40,7 +40,7 @@
     "@vitejs/plugin-react": "^5.1.1",
     "@webflow/data-types": "^1.0.2",
     "@webflow/react": "^1.0.2",
-    "@webflow/webflow-cli": "^1.8.31",
+    "@webflow/webflow-cli": "^1.8.50",
     "autoprefixer": "^10.4.22",
     "devflow": "github:peakpointch/devflow",
     "jest": "^29.7.0",
