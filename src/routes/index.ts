@@ -6,7 +6,5 @@ import initMeetings from "../modules/meetings";
 export const app = () => {
   peakflow.execute("vimePlayer");
 
-  new WFRoute("/").execute(async () => {
-    initMeetings();
-  });
+  initMeetings();
 };
