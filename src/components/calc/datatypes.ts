@@ -22,27 +22,24 @@ export type PackageName =
   | "UNKNOWN";
 
 // Define custom error messages for required fields in Step 1
-const requiredMessage = "Dieses Feld ist erforderlich für die Berechnung.";
+const requiredMessage = "Bitte füllen Sie dieses Feld aus.";
+const requiredMessageCalc = "Dieses Feld ist erforderlich für die Berechnung.";
 
 export const formSchema = z.object({
   // Step 1 Fields - Using .nonempty() for strings/selects or .min() for numbers
-  bookingsPerMonth: z.string().nonempty({ message: requiredMessage }),
+  bookingsPerMonth: z.string().nonempty({ message: requiredMessageCalc }),
 
-  employees: z.string().nonempty({ message: requiredMessage }),
+  employees: z.string().nonempty({ message: requiredMessageCalc }),
 
-  mwstStatus: z.string().nonempty({ message: requiredMessage }),
+  mwstStatus: z.string().nonempty({ message: requiredMessageCalc }),
 
-  legalForm: z.string().nonempty({ message: requiredMessage }),
+  legalForm: z.string().nonempty({ message: requiredMessageCalc }),
 
-  companyName: z
-    .string()
-    .min(3, { message: "Company name must be at least 3 characters long." }),
+  companyName: z.string().nonempty({ message: requiredMessage }),
 
-  email: z.email({ message: "Please enter a valid email address." }), // Zod's .email() accepts a message
+  email: z.email({ message: "Bitte gib eine gültige E-Mail Adresse ein." }), // Zod's .email() accepts a message
 
-  phone: z
-    .string()
-    .nonempty({ message: "A contact phone number is required." }),
+  phone: z.string().nonempty({ message: requiredMessage }),
 });
 
 /**
