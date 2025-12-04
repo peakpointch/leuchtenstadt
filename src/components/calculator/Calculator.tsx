@@ -155,3 +155,5 @@ export const Calculator = ({ visibility }: CalculatorProps) => {
     <></>
   );
 };
+
+export default Calculator;
