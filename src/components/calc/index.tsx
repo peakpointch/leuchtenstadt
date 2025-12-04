@@ -332,7 +332,11 @@ export const FormSuccess: React.FC = () => {
 
 // --- MAIN APPLICATION COMPONENT ---
 
-export const Calculator: React.FC = () => {
+export interface CalculatorProps {
+  visibility: boolean;
+}
+
+export const Calculator = ({ visibility }: CalculatorProps) => {
   const [result, setResult] = React.useState<CalculationResult | undefined>(
     undefined
   );
@@ -410,7 +414,7 @@ export const Calculator: React.FC = () => {
     setStep(1);
   }, []);
 
-  return (
+  return visibility ? (
     <div className="w-full bg-white grid md:grid-cols-2 gap-10">
       {/* --- Left Column: Dynamic Step Content --- */}
       <form
@@ -447,5 +451,7 @@ export const Calculator: React.FC = () => {
         />
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
