@@ -41,7 +41,7 @@ export const PackageCard: React.FC<ResultCardProps> = ({ result }) => {
               packageColors[selectedPackage.name]
             }`}
           >
-            {isPreview ? "???" : selectedPackage.name}
+            {isPreview ? "Jetzt berechnen" : selectedPackage.name}
           </h3>
         </div>
         <div className="flex flex-col @sm:items-end">
