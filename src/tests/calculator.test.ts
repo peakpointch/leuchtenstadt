@@ -1,10 +1,10 @@
-import { calculateFullPrice } from "@/components/calculator/core";
+import { calculateFullPrice } from "../components/calculator/core";
 import {
   MwstStatus,
   LegalForm,
   PackageName,
   UserInput,
-} from "@/components/calculator/datatypes";
+} from "../components/calculator/datatypes";
 
 /**
  * =============================================
