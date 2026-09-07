@@ -4,9 +4,8 @@
   "type": "module",
   "private": false,
   "scripts": {
-    "dev": "devflow dev",
-    "build": "devflow build",
-    "dev:components": "vite --config src/components/vite.config.ts"
+    "dev": "peakflow dev",
+    "build": "peakflow build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -18,7 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.555.0",
-    "peakflow": "github:peakpointch/peakflow#v0.2.0-alpha.4",
+    "peakflow": "github:peakpointch/peakflow#main",
     "react-hook-form": "^7.68.0",
     "tailwind-merge": "^3.4.0",
     "tw-animate-css": "^1.4.0",
@@ -30,21 +29,19 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
     "@webflow/data-types": "^1.0.4",
     "@webflow/react": "^1.0.4",
     "@webflow/webflow-cli": "^1.8.51",
     "autoprefixer": "^10.4.22",
-    "devflow": "github:peakpointch/devflow",
     "jest": "^29.7.0",
+    "peakflow-cli": "github:peakpointch/peakflow-cli#main",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.17",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
-    "typescript": "^7.0.2",
-    "vite": "^7.2.4"
+    "typescript": "^7.0.2"
   },
   "license": "MIT"
 }
