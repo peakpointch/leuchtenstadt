@@ -6,6 +6,8 @@
     "target": "ES2020",
     "lib": ["ESNEXT", "DOM"],
     "jsx": "react-jsx",
+    "strict": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "declaration": true,
     "noEmit": true,
