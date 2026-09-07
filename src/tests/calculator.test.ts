@@ -1,3 +1,4 @@
+import { describe, expect, it } from "@jest/globals";
 import { calculateFullPrice } from "../components/calculator/core";
 import {
   MwstStatus,
