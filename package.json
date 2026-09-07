@@ -34,7 +34,6 @@
     "@typescript/native": "npm:typescript@7.0.2",
     "@webflow/data-types": "^1.0.4",
     "@webflow/react": "^1.0.4",
-    "@webflow/webflow-cli": "^1.8.51",
     "autoprefixer": "^10.4.22",
     "jest": "^30.5.1",
     "peakflow-cli": "github:peakpointch/peakflow-cli#main",
