@@ -31,7 +31,7 @@ export default defineConfig({
     {
       name: "website",
       modules: ["./dist/app.js"],
-      version: "v0.0.4",
+      version: "v0.0.5",
       pages: ["/", "/**/*"],
       skip: true,
     },
